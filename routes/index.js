@@ -13,12 +13,11 @@ const router = new Router({
  * 用户接口
  */
 // 创建用户接口（路由）
-router.post('/users/create', UsersController.create);
-router.get('/users/login/:tel/:password', UsersController.login);
+router.post('/user/create', UsersController.create);
+router.post('/user/login', UsersController.login);
 // 获取用户详情接口（路由）
-router.get('/users/getUserById/:id', UsersController.detail);
+router.get('/user/getInfo/:id', UsersController.getInfo);
 // 获取用户列表（路由）
-router.get('/users/list', UsersController.list);
-
+router.get('/user/getUsersListByDepartmentId/:id', UsersController.getUsersListByDepartmentId);
 
 module.exports = router

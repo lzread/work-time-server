@@ -18,10 +18,16 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             field: 'name',
         },
+        // 头像
+        avatar: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'avatar',
+        },
         // 生日
         birth: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
             field: 'birth'
         },
         // 性别 0男 1女
@@ -45,13 +51,13 @@ module.exports = function (sequelize, DataTypes) {
         // 邮件
         mail: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             field: 'mail'
         },
         // 地址
         address: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             field: 'address'
         },
         // 是否冻结 0正常 1冻结
@@ -59,6 +65,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             field: 'freeze'
+        },
+        // 自我介绍
+        introduction: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            field: 'introduction'
         },
         // 所属部门ID
         department_id: {
@@ -86,8 +98,8 @@ module.exports = function (sequelize, DataTypes) {
         },
         // 权限 0 超级管理员 1 普通用户
         roles: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
+            type: DataTypes.STRING,
+            allowNull: true,
             field: 'roles'
         },
         // 创建时间

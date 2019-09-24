@@ -47,32 +47,28 @@ class usersController {
 
 
     static async login(ctx) {
-        let tel = ctx.params.tel;
-        let password = ctx.params.password;
-        console.log(tel);
-        console.log(password);
-        if (tel && password) {
+        let req = ctx.request.body;
+
+        if (req.tel && req.password) {
+
             try {
-                let data = await UsersModel.userLogin(tel, password);
-                console.log(data);
+                let data = await UsersModel.userLogin(req.tel, req.password);
+
                 ctx.response.status = 200;
-                if (data) {
-                    ctx.body = {
-                        code: 200,
-                        msg: '登录成功',
-                    }
-                } else {
-                    ctx.body = {
-                        code: 200,
-                        msg: '登录失败',
-                    }
+
+                ctx.body = {
+                    code: 200,
+                    msg: '登录成功',
+                    data
                 }
 
             } catch (err) {
+                console.log(err);
                 ctx.response.status = 412;
                 ctx.body = {
                     code: 200,
                     msg: '登录失败',
+                    data
                 }
             }
         } else {
@@ -89,12 +85,13 @@ class usersController {
      * @param ctx
      * @returns {Promise.<void>}
      */
-    static async detail(ctx) {
+    static async getInfo(ctx) {
         let id = ctx.params.id;
+
         if (id) {
             try {
                 // 查询用户详情模型
-                let data = await UsersModel.getUsersDetail(id);
+                let data = await UsersModel.getUsersInfo(id);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -123,15 +120,27 @@ class usersController {
      * @param ctx
      * @returns {Promise.<void>}
      */
-    static async list(ctx) {
+    static async getUsersListByDepartmentId(ctx) {
+        let id = ctx.params.id;
+        const { page, limit } = ctx.query;
 
-        let data = await UsersModel.getUsersList();
-        ctx.response.status = 200;
-        ctx.body = {
-            code: 200,
-            msg: '查询成功',
-            data
+        if (id) {
+            let data = await UsersModel.getUsersListByDepartmentId(id, parseInt(page), parseInt(limit));
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '查询成功',
+                data: data.rows,
+                total: data.total
+            }
+        } else {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '部门ID必须传'
+            }
         }
+
     }
 }
 

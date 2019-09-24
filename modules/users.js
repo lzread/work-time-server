@@ -22,8 +22,10 @@ class UsersModel {
         return await Users.create(data)
     }
 
+
     static async userLogin(tel, password) {
         return await Users.findOne({
+            attributes: ['id'],
             where: {
                 tel,
                 password
@@ -36,7 +38,7 @@ class UsersModel {
      * @param id  用户ID
      * @returns {Promise<Model>}
      */
-    static async getUsersDetail(id) {
+    static async getUsersInfo(id) {
         return await Users.findOne({
             where: {
                 id,
@@ -44,9 +46,24 @@ class UsersModel {
         })
     }
 
-    static async getUsersList() {
-        return await Users.findAll()
+    static async getUsersListByDepartmentId(department_id, page, limit) {
+
+
+        const users = await Users.findAndCountAll({
+            where: {
+                department_id,
+            },
+            limit: limit,
+            offset: limit * (page - 1)
+        })
+
+        return {
+            total: users.count,
+            rows: users.rows
+        };
+
+
     }
-}
+} 
 
 module.exports = UsersModel
