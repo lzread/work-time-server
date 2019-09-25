@@ -18,12 +18,12 @@ class UsersModel {
      * @param data
      * @returns {Promise<*>}
      */
-    static async createUsers(data) {
+    static async create(data) {
         return await Users.create(data)
     }
 
 
-    static async userLogin(tel, password) {
+    static async login(tel, password) {
         return await Users.findOne({
             attributes: ['id'],
             where: {
@@ -38,7 +38,7 @@ class UsersModel {
      * @param id  用户ID
      * @returns {Promise<Model>}
      */
-    static async getUsersInfo(id) {
+    static async getInfo(id) {
         return await Users.findOne({
             where: {
                 id,
@@ -46,7 +46,7 @@ class UsersModel {
         })
     }
 
-    static async getUsersListByDepartmentId(department_id, page, limit) {
+    static async getList(department_id, page, limit) {
 
 
         const users = await Users.findAndCountAll({
@@ -64,6 +64,6 @@ class UsersModel {
 
 
     }
-} 
+}
 
 module.exports = UsersModel

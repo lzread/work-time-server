@@ -5,6 +5,9 @@
 const UsersModel = require('../modules/users')
 
 class usersController {
+
+
+
     /**
      * 创建用户
      * @param ctx
@@ -16,9 +19,9 @@ class usersController {
         if (req.name && reg.password) {
             try {
                 // 创建用户模型
-                const ret = await UsersModel.createUsers(req);
+                const ret = await UsersModel.create(req);
                 // 把刚刚新建的用户ID查询用户详情，且返回新创建的用户信息
-                const data = await UsersModel.getUsersDetail(ret.id);
+                const data = await UsersModel.getInfo(ret.id);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -46,13 +49,19 @@ class usersController {
 
 
 
+    
+
+    /**
+     * 登录
+     * @param {*} ctx 
+     */
     static async login(ctx) {
         let req = ctx.request.body;
 
         if (req.tel && req.password) {
 
             try {
-                let data = await UsersModel.userLogin(req.tel, req.password);
+                let data = await UsersModel.login(req.tel, req.password);
 
                 ctx.response.status = 200;
 
@@ -80,6 +89,10 @@ class usersController {
         }
 
     }
+
+
+
+
     /**
      * 获取用户详情
      * @param ctx
@@ -91,7 +104,7 @@ class usersController {
         if (id) {
             try {
                 // 查询用户详情模型
-                let data = await UsersModel.getUsersInfo(id);
+                let data = await UsersModel.getInfo(id);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -115,17 +128,20 @@ class usersController {
             }
         }
     }
+
+
+
     /**
      * 获取用户列表
      * @param ctx
      * @returns {Promise.<void>}
      */
-    static async getUsersListByDepartmentId(ctx) {
+    static async getList(ctx) {
         let id = ctx.params.id;
         const { page, limit } = ctx.query;
 
         if (id) {
-            let data = await UsersModel.getUsersListByDepartmentId(id, parseInt(page), parseInt(limit));
+            let data = await UsersModel.getList(id, parseInt(page), parseInt(limit));
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
@@ -142,6 +158,9 @@ class usersController {
         }
 
     }
+
+
+
 }
 
 module.exports = usersController
