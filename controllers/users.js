@@ -3,11 +3,7 @@
     └── users.js
 */
 const UsersModel = require('../modules/users')
-
 class usersController {
-
-
-
     /**
      * 创建用户
      * @param ctx
@@ -46,13 +42,8 @@ class usersController {
         }
 
     }
-
-
-
-    
-
     /**
-     * 登录
+     * 用户登录
      * @param {*} ctx 
      */
     static async login(ctx) {
@@ -89,12 +80,30 @@ class usersController {
         }
 
     }
-
-
-
-
     /**
-     * 获取用户详情
+     * 根据ID删除用户
+     * @param ctx
+     * @returns {Promise.<void>}
+     */
+    static async delete(ctx) {
+        let req = ctx.request.body;
+        if (req.id) {
+            await UsersModel.delete(req.id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '删除成功',
+            }
+        } else {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 200,
+                msg: '参数不齐全',
+            }
+        }
+    }
+    /**
+     * 根据ID获取用户详情
      * @param ctx
      * @returns {Promise.<void>}
      */
@@ -128,11 +137,30 @@ class usersController {
             }
         }
     }
-
-
-
     /**
-     * 获取用户列表
+     * 根据部门ID删除用户
+     * @param ctx
+     * @returns {Promise.<void>}
+     */
+    static async deleteByDepId(ctx) {
+        let req = ctx.request.body;
+        if (req.department_id) {
+            await UsersModel.deleteByDepId(req.department_id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '删除成功',
+            }
+        } else {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 200,
+                msg: '参数不齐全',
+            }
+        }
+    }
+    /**
+     * 根据部门ID获取用户列表
      * @param ctx
      * @returns {Promise.<void>}
      */
@@ -158,9 +186,5 @@ class usersController {
         }
 
     }
-
-
-
 }
-
 module.exports = usersController

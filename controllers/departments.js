@@ -3,10 +3,7 @@
     └── departments.js
 */
 const DepartmentsModel = require('../modules/departments')
-
 class DepartmentsController {
-
-
     /**
      * 创建部门
      * @param ctx
@@ -68,22 +65,63 @@ class DepartmentsController {
         }
 
     }
-
-
-    static async getTreeList(ctx) {
-
+    /**
+     * 删除部门
+     * @param ctx
+     * @returns {Promise.<void>}
+     */
+    static async delete(ctx) {
         let id = ctx.params.id;
+        if (id) {
+            await DepartmentsModel.delete(id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                msg: '删除成功',
+            }
+        } else {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 200,
+                msg: '参数不齐全',
+            }
+        }
+    }
+    /**
+     * 部门树
+     * @param ctx
+     * @returns {Promise.<void>}
+     */
+    static async getTreeList(ctx) {
+        const ret = await DepartmentsModel.getTreeList();
+        const node = JSON.stringify(ret);
+        const data = tree(JSON.parse(node));
+        function tree(data) {
+            let map = {};
+            let obj = [];
+            data.forEach(item => {
+                map[item.id] = item;
+            })
+            data.forEach(item => {
+                let parent = map[item.parentId];
+                if (parent) {
+                    if (!Array.isArray(parent.children)) {
 
-        let data = await DepartmentsModel.getTreeList(id);
+                        parent.children = []
+                    };
+                    parent.children.push(item);
+                } else {
+                    obj.push(item);
+                }
+            })
+            return obj;
+        }
         ctx.response.status = 200;
         ctx.body = {
             code: 200,
             msg: '查询成功',
             data,
         }
-
-
     }
 }
-
 module.exports = DepartmentsController

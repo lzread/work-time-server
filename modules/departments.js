@@ -7,6 +7,8 @@
 const db = require('../config/db');
 // 引入Sequelize对象
 const Sequelize = db.sequelize;
+// 引入Sequelize操作符
+const Op = db.Op;
 // 引入上一步的用户数据表模型文件
 const Departments = Sequelize.import('../schema/departments');
 // 自动创建表
@@ -19,6 +21,8 @@ Departments.hasMany(
         foreignKey: 'parentId',
     }
 );
+
+
 
 
 class DepartmentsModel {
@@ -45,24 +49,42 @@ class DepartmentsModel {
         })
     }
     /**
+      * 根据ID删除部门
+      * @param id  用户ID
+      * @returns {Promise<Model>}
+      */
+    static async delete(id) {
+        return await Departments.destroy({
+            where: {
+                [Op.or]: [
+                    { id: id },
+                    { parentId: id }
+                ]
+            },
+        })
+    }
+    /**
      * 根据部门ID生成部门树
      * @param {*} id 
      */
-    static async getTreeList(id) {
-        return await Departments.findAll({
-            where: {
-                id
-            },
-            include: {
-                model: Departments,
-                as: 'children',
-                required: false,
-                include: {
-                    all: true,
-                    nested: true,
-                }
-            }
-        })
+    // static async getTreeList(id) {
+    //     return await Departments.findAll({
+    //         where: {
+    //             id
+    //         },
+    //         include: {
+    //             model: Departments,
+    //             as: 'children',
+    //             required: false,
+    //             include: {
+    //                 all: true,
+    //                 nested: true,
+    //             }
+    //         }
+    //     })
+    // }
+    static async getTreeList() {
+        return await Departments.findAll();
     }
 
 

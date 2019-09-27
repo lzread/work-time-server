@@ -28,6 +28,8 @@ router.post('/departments/create', DepartmentsController.create);
 //编辑部门
 router.post('/departments/edit', DepartmentsController.edit);
 // 获取部门树
-router.get('/departments/getTreeList/:id', DepartmentsController.getTreeList);
+router.get('/departments/getTreeList', DepartmentsController.getTreeList);
+// 删除部门
+router.get('/departments/delete/:id', DepartmentsController.delete);
 
 module.exports = router

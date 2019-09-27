@@ -18,9 +18,12 @@ const sequelize = new Sequelize('worktimedb', 'root', '123456', {
         acquire: 30000,
         idle: 10000
     },
-    timezone: '+08:00' //东八时区
+    timezone: '+08:00', //东八时区
 });
 
+
+const Op = Sequelize.Op;
+
 module.exports = {
-    sequelize
+    sequelize, Op
 }

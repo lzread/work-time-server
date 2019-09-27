@@ -46,8 +46,38 @@ class UsersModel {
         })
     }
 
+    /**
+     * 根据ID删除用户
+     * @param id  用户ID
+     * @returns {Promise<Model>}
+     */
+    static async delete(id) {
+        return await Users.destroy({
+            where: {
+                id,
+            },
+        })
+    }
+
+    /**
+     * 根据部门ID删除用户
+     * @param id  部门ID
+     * @returns {Promise<Model>}
+     */
+    static async deleteByDepId(id) {
+        return await Users.destroy({
+            where: {
+                department_id: id,
+            },
+        })
+    }
+
+
+
     static async getList(department_id, page, limit) {
 
+        page = page == undefined ? 1 : page;
+        limit = limit == undefined ? 10 : limit;
 
         const users = await Users.findAndCountAll({
             where: {
