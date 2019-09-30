@@ -14,13 +14,7 @@ const Departments = Sequelize.import('../schema/departments');
 // 自动创建表
 Departments.sync({ force: false });
 
-Departments.hasMany(
-    Departments,
-    {
-        as: 'children',
-        foreignKey: 'parentId',
-    }
-);
+
 
 
 
@@ -38,10 +32,11 @@ class DepartmentsModel {
      * @param {*} data 
      */
     static async edit(data) {
-        const { name, id } = data;
+        const { id, name, parentId } = data;
         return await Departments.update(
             {
                 name,
+                parentId
             }, {
             where: {
                 id

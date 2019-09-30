@@ -1,36 +1,34 @@
 /**
 ├── schema
-    └── departments.js
+    └── jobs.js
 */
-const moment = require('moment');
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('departments', {
-        // 部门ID
+    return sequelize.define('jobs', {
+        // 职务ID
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true,
         },
-        // 部门名称
+        // 职务名称
         name: {
             type: DataTypes.STRING,
             allowNull: false,
             field: 'name',
         },
-        // 父级ID
-        parentId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            field: 'parentId',
-        },
-        // 部门描述
+        // 职务描述
         desc: {
             type: DataTypes.TEXT,
             allowNull: true,
             field: 'desc',
         },
-
+        // 职务权限菜单
+        routes: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            field: 'routes',
+        },
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user
         // 为 false MySQL创建的表名称会是复数 users

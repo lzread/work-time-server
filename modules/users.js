@@ -3,12 +3,16 @@
     └── users.js
 */
 
-// 引入刚刚在第五点建立连接mysql数据库的db.js文件
 const db = require('../config/db');
 // 引入Sequelize对象
 const Sequelize = db.sequelize;
 // 引入上一步的用户数据表模型文件
 const Users = Sequelize.import('../schema/users');
+const Departments = Sequelize.import('../schema/departments');
+const Jobs = Sequelize.import('../schema/jobs');
+
+Users.belongsTo(Departments, { foreignKey: 'departmentId', targetKey: 'id' });
+Users.belongsTo(Jobs, { foreignKey: 'jobId', targetKey: 'id' });
 // 自动创建表
 Users.sync({ force: false });
 
@@ -22,12 +26,28 @@ class UsersModel {
         return await Users.create(data)
     }
 
+    /**
+     * 编辑用户
+     * @param {*} data 
+     */
+    static async edit(data) {
+        return await Users.update(
+            {
+                data,
+            },
+            {
+                where: {
+                    id
+                },
+            })
+    }
 
-    static async login(tel, password) {
+
+    static async login(username, password) {
         return await Users.findOne({
             attributes: ['id'],
             where: {
-                tel,
+                username,
                 password
             },
         })
@@ -67,24 +87,28 @@ class UsersModel {
     static async deleteByDepId(id) {
         return await Users.destroy({
             where: {
-                department_id: id,
+                departmentId: id,
             },
         })
     }
 
 
 
-    static async getList(department_id, page, limit) {
+    static async getList(departmentId, page, limit) {
+
+
 
         page = page == undefined ? 1 : page;
         limit = limit == undefined ? 10 : limit;
 
         const users = await Users.findAndCountAll({
+            include: [Departments, Jobs],
             where: {
-                department_id,
+                departmentId,
             },
             limit: limit,
-            offset: limit * (page - 1)
+            offset: limit * (page - 1),
+            raw: true
         })
 
         return {

@@ -5,6 +5,8 @@
 const Router = require('koa-router')
 const UsersController = require('../controllers/users')
 const DepartmentsController = require('../controllers/departments')
+const JobsController = require('../controllers/jobs')
+const RoutesController = require('../controllers/routes')
 const router = new Router({
     prefix: '/api/v1'
 })
@@ -32,4 +34,7 @@ router.get('/departments/getTreeList', DepartmentsController.getTreeList);
 // 删除部门
 router.get('/departments/delete/:id', DepartmentsController.delete);
 
+
+router.get('/jobs/roles/:id', JobsController.getRoles);
+router.get('/routes/getRoutes', RoutesController.getRoutes);
 module.exports = router

@@ -49,11 +49,13 @@ class usersController {
     static async login(ctx) {
         let req = ctx.request.body;
 
-        if (req.tel && req.password) {
+        if (req.username && req.password) {
 
+            
             try {
-                let data = await UsersModel.login(req.tel, req.password);
+                let data = await UsersModel.login(req.username, req.password);
 
+                console.log(data);
                 ctx.response.status = 200;
 
                 ctx.body = {
