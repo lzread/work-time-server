@@ -1,34 +1,24 @@
 /**
 ├── schema
-    └── jobs.js
+    └── roles.js
+    角色表
 */
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('jobs', {
-        // 职务ID
-        id: {
+    return sequelize.define('roles', {
+        // 角色ID
+        ID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true,
         },
-        // 职务名称
-        name: {
+        // 角色名称
+        RoleName: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'name',
+            field: 'RoleName',
         },
-        // 职务描述
-        desc: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-            field: 'desc',
-        },
-        // 职务权限菜单
-        routes: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-            field: 'routes',
-        },
+
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user
         // 为 false MySQL创建的表名称会是复数 users

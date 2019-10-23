@@ -1,37 +1,22 @@
 /**
 ├── schema
-    └── departments.js
-    部门表
+    └── menus.js
+    菜单表
 */
-const moment = require('moment');
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('departments', {
-        // 部门ID
-        id: {
+    return sequelize.define('menus', {
+        ID: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: true,
             autoIncrement: true,
         },
-        // 部门名称
-        name: {
+        //菜单名称
+        MenuName: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'name',
-        },
-        // 父级ID
-        parentId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            field: 'parentId',
-        },
-        // 部门描述
-        desc: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-            field: 'desc',
-        },
-
+            field: 'MenuName',
+        }
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user
         // 为 false MySQL创建的表名称会是复数 users

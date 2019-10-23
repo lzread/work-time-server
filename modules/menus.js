@@ -1,6 +1,6 @@
 /**
 ├── modules
-    └── jobs.js
+    └── menus.js
 */
 
 // 引入刚刚在第五点建立连接mysql数据库的db.js文件
@@ -10,24 +10,24 @@ const Sequelize = db.sequelize;
 // 引入Sequelize操作符
 const Op = db.Op;
 // 引入上一步的用户数据表模型文件
-const Jobs = Sequelize.import('../schema/jobs');
+const Menus = Sequelize.import('../schema/menus');
 // 自动创建表
-Jobs.sync({ force: false });
+Menus.sync({ force: false });
 
 
 
 
 
-class JobsModel {
-
-    static async getRoles(id) {
-        return await Jobs.findOne({
+class MenusModel {
+    
+    static async getMenusById(id) {
+        return await Menus.findAll({
             where: {
-                id
+                id,
             },
-        });
+        })
     }
 
 }
 
-module.exports = JobsModel
+module.exports = MenusModel

@@ -20,18 +20,12 @@ Departments.sync({ force: false });
 
 
 class DepartmentsModel {
-    /**
-     * 创建部门
-     * @param {*} data 
-     */
-    static async create(data) {
+
+    static async addDepartment(data) {
         return await Departments.create(data)
     }
-    /**
-     * 编辑部门
-     * @param {*} data 
-     */
-    static async edit(data) {
+
+    static async updateDepartment(data) {
         const { id, name, parentId } = data;
         return await Departments.update(
             {
@@ -43,12 +37,8 @@ class DepartmentsModel {
             },
         })
     }
-    /**
-      * 根据ID删除部门
-      * @param id  用户ID
-      * @returns {Promise<Model>}
-      */
-    static async delete(id) {
+
+    static async deleteDepartment(id) {
         return await Departments.destroy({
             where: {
                 [Op.or]: [
@@ -58,27 +48,8 @@ class DepartmentsModel {
             },
         })
     }
-    /**
-     * 根据部门ID生成部门树
-     * @param {*} id 
-     */
-    // static async getTreeList(id) {
-    //     return await Departments.findAll({
-    //         where: {
-    //             id
-    //         },
-    //         include: {
-    //             model: Departments,
-    //             as: 'children',
-    //             required: false,
-    //             include: {
-    //                 all: true,
-    //                 nested: true,
-    //             }
-    //         }
-    //     })
-    // }
-    static async getTreeList() {
+
+    static async getDepartments() {
         return await Departments.findAll();
     }
 

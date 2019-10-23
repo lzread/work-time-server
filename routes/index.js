@@ -3,38 +3,50 @@
  └── index.js
  */
 const Router = require('koa-router')
+
 const UsersController = require('../controllers/users')
 const DepartmentsController = require('../controllers/departments')
-const JobsController = require('../controllers/jobs')
-const RoutesController = require('../controllers/routes')
+const RolesController = require('../controllers/roles')
+const MenusController = require('../controllers/menus')
+const RolesMenusController = require('../controllers/roles_menus')
+const UsersRolesController = require('../controllers/users_roles')
+
+
+
+
+
+
+
 const router = new Router({
     prefix: '/api/v1'
 })
 
-/**
- * 用户接口
- */
-// 创建用户接口
-router.post('/user/create', UsersController.create);
+
+
 router.post('/user/login', UsersController.login);
-// 获取用户详情接口
+router.post('/user/addUser', UsersController.addUser);
+
 router.get('/user/getInfo/:id', UsersController.getInfo);
-// 获取用户列表
-router.get('/user/getList/:id', UsersController.getList);
-
-/**
- * 部门接口
- */
-//创建部门
-router.post('/departments/create', DepartmentsController.create);
-//编辑部门
-router.post('/departments/edit', DepartmentsController.edit);
-// 获取部门树
-router.get('/departments/getTreeList', DepartmentsController.getTreeList);
-// 删除部门
-router.get('/departments/delete/:id', DepartmentsController.delete);
+router.get('/user/getUsersByDepartmentID/:id', UsersController.getUsersByDepartmentID);
 
 
-router.get('/jobs/roles/:id', JobsController.getRoles);
-router.get('/routes/getRoutes', RoutesController.getRoutes);
+
+router.post('/department/addDepartment', DepartmentsController.addDepartment);
+router.post('/department/updateDepartment', DepartmentsController.updateDepartment);
+
+router.get('/department/getDepartments', DepartmentsController.getDepartments);
+router.get('/department/deleteDepartment/:id', DepartmentsController.deleteDepartment);
+
+
+
+router.get('/role/getRoles/:id', RolesController.getRoles);
+router.post('/role/addRole', RolesController.addRole);
+router.post('/role/updateRole', RolesController.updateRole);
+router.get('/role/deleteRole/:id', RolesController.deleteRole);
+
+
+
+router.get('/roles_menus/getMenus', RolesMenusController.getMenus);
+
+
 module.exports = router

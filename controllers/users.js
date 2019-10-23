@@ -3,25 +3,30 @@
     └── users.js
 */
 const UsersModel = require('../modules/users')
+const UsersRolesModel = require('../modules/users_roles')
+const RolesMenusModel = require('../modules/roles_menus')
+
+const Utils = require('../utils')
+
 class usersController {
     /**
      * 创建用户
      * @param ctx
      * @returns {Promise.<void>}
      */
-    static async create(ctx) {
+    static async addUser(ctx) {
         // 接收客服端
         let req = ctx.request.body;
         if (req.name && reg.password) {
             try {
                 // 创建用户模型
-                const ret = await UsersModel.create(req);
+                const ret = await UsersModel.addUser(req);
                 // 把刚刚新建的用户ID查询用户详情，且返回新创建的用户信息
                 const data = await UsersModel.getInfo(ret.id);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
-                    msg: '创建用户成功',
+                    message: '创建用户成功',
                     data
                 }
 
@@ -29,7 +34,7 @@ class usersController {
                 ctx.response.status = 412;
                 ctx.body = {
                     code: 200,
-                    msg: '创建用户失败',
+                    message: '创建用户失败',
                     data: err
                 }
             }
@@ -37,7 +42,7 @@ class usersController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 200,
-                msg: '参数不齐全',
+                message: '参数不齐全',
             }
         }
 
@@ -47,37 +52,29 @@ class usersController {
      * @param {*} ctx 
      */
     static async login(ctx) {
-        let req = ctx.request.body;
-
-        if (req.username && req.password) {
-
-            
-            try {
-                let data = await UsersModel.login(req.username, req.password);
-
-                console.log(data);
+        const req = ctx.request.body;
+        try {
+            const data = await UsersModel.login(req.UserName, req.UserPass);
+            if (data) {
                 ctx.response.status = 200;
-
                 ctx.body = {
                     code: 200,
-                    msg: '登录成功',
+                    message: '登录成功',
                     data
                 }
-
-            } catch (err) {
-                console.log(err);
-                ctx.response.status = 412;
+            } else {
+                ctx.response.status = 200;
                 ctx.body = {
-                    code: 200,
-                    msg: '登录失败',
+                    code: 412,
+                    message: '用户名或密码错误',
                     data
                 }
             }
-        } else {
+        } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
-                code: 200,
-                msg: '参数不齐全',
+                code: 416,
+                message: '登录失败',
             }
         }
 
@@ -87,105 +84,93 @@ class usersController {
      * @param ctx
      * @returns {Promise.<void>}
      */
-    static async delete(ctx) {
+    static async deleteUser(ctx) {
         let req = ctx.request.body;
         if (req.id) {
-            await UsersModel.delete(req.id);
+            await UsersModel.deleteUser(req.id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '删除成功',
+                message: '删除成功',
             }
         } else {
             ctx.response.status = 416;
             ctx.body = {
                 code: 200,
-                msg: '参数不齐全',
+                message: '参数不齐全',
             }
         }
     }
-    /**
-     * 根据ID获取用户详情
-     * @param ctx
-     * @returns {Promise.<void>}
-     */
+
     static async getInfo(ctx) {
-        let id = ctx.params.id;
 
-        if (id) {
-            try {
-                // 查询用户详情模型
-                let data = await UsersModel.getInfo(id);
-                ctx.response.status = 200;
-                ctx.body = {
-                    code: 200,
-                    msg: '查询成功',
-                    data
-                }
+        const id = ctx.params.id;
 
-            } catch (err) {
-                ctx.response.status = 412;
-                ctx.body = {
-                    code: 412,
-                    msg: '查询失败',
-                    data
-                }
-            }
-        } else {
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 416,
-                msg: '用户ID必须传'
+        let info = await UsersModel.getInfo(id);
+        let roles = await UsersRolesModel.getRolesByUserId(id);
+        let role = [];
+        let menu = [];
+        for (let x in roles) {
+            role.push(roles[x].role.RoleName);
+            let menus = await RolesMenusModel.getMenusByRoleId(roles[x].role.ID);
+            for (let x in menus) {
+                menu.push({
+                    name:menus[x].menu.MenuName,
+                    roles:role
+                });
             }
         }
-    }
-    /**
-     * 根据部门ID删除用户
-     * @param ctx
-     * @returns {Promise.<void>}
-     */
-    static async deleteByDepId(ctx) {
-        let req = ctx.request.body;
-        if (req.department_id) {
-            await UsersModel.deleteByDepId(req.department_id);
-            ctx.response.status = 200;
-            ctx.body = {
-                code: 200,
-                msg: '删除成功',
-            }
-        } else {
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 200,
-                msg: '参数不齐全',
-            }
+
+        const data = Object.assign(JSON.parse(JSON.stringify(info)), { roles: role, menus:Utils.unique(menu)});
+
+        ctx.body = {
+            code: 200,
+            message: '查询成功',
+            data,
         }
     }
+
+
+
+    static async deleteUsersByDepartmentID(ctx) {
+        const req = ctx.request.body;
+        const data = await UsersModel.deleteUsersByDepartmentID(req);
+        ctx.response.status = 200;
+        ctx.body = {
+            code: 200,
+            message: '删除成功',
+            data
+        }
+    }
+
+
     /**
      * 根据部门ID获取用户列表
      * @param ctx
      * @returns {Promise.<void>}
      */
-    static async getList(ctx) {
-        let id = ctx.params.id;
+    static async getUsersByDepartmentID(ctx) {
+        const id = ctx.params.id;
         const { page, limit } = ctx.query;
 
-        if (id) {
-            let data = await UsersModel.getList(id, parseInt(page), parseInt(limit));
+        try {
+            const data = await UsersModel.getUsersByDepartmentID(id, parseInt(page), parseInt(limit));
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '查询成功',
+                message: '查询成功',
                 data: data.rows,
                 total: data.total
             }
-        } else {
+        } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '部门ID必须传'
+                message: '查询失败',
+                data: err
             }
         }
+
 
     }
 }

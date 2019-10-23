@@ -9,56 +9,34 @@ const Sequelize = db.sequelize;
 // 引入上一步的用户数据表模型文件
 const Users = Sequelize.import('../schema/users');
 const Departments = Sequelize.import('../schema/departments');
-const Jobs = Sequelize.import('../schema/jobs');
+const Roles = Sequelize.import('../schema/roles');
+const UsersRoles = Sequelize.import('../schema/users_roles');
+const RolesMenus = Sequelize.import('../schema/roles_menus');
+const Menus = Sequelize.import('../schema/menus');
 
-Users.belongsTo(Departments, { foreignKey: 'departmentId', targetKey: 'id' });
-Users.belongsTo(Jobs, { foreignKey: 'jobId', targetKey: 'id' });
+
+
+Users.belongsTo(UsersRoles, { foreignKey: 'ID', targetKey: 'UserId' });
+
 // 自动创建表
 Users.sync({ force: false });
 
 class UsersModel {
-    /**
-     * 创建用户模型
-     * @param data
-     * @returns {Promise<*>}
-     */
-    static async create(data) {
-        return await Users.create(data)
-    }
-
-    /**
-     * 编辑用户
-     * @param {*} data 
-     */
-    static async edit(data) {
-        return await Users.update(
-            {
-                data,
-            },
-            {
-                where: {
-                    id
-                },
-            })
-    }
 
 
-    static async login(username, password) {
+
+    static async login(UserName, UserPass) {
         return await Users.findOne({
             attributes: ['id'],
             where: {
-                username,
-                password
+                UserName,
+                UserPass
             },
         })
     }
 
-    /**
-     * 查询取用户详情数据
-     * @param id  用户ID
-     * @returns {Promise<Model>}
-     */
     static async getInfo(id) {
+
         return await Users.findOne({
             where: {
                 id,
@@ -66,43 +44,13 @@ class UsersModel {
         })
     }
 
-    /**
-     * 根据ID删除用户
-     * @param id  用户ID
-     * @returns {Promise<Model>}
-     */
-    static async delete(id) {
-        return await Users.destroy({
-            where: {
-                id,
-            },
-        })
-    }
 
-    /**
-     * 根据部门ID删除用户
-     * @param id  部门ID
-     * @returns {Promise<Model>}
-     */
-    static async deleteByDepId(id) {
-        return await Users.destroy({
-            where: {
-                departmentId: id,
-            },
-        })
-    }
-
-
-
-    static async getList(departmentId, page, limit) {
-
-
+    static async getUsersByDepartmentID(departmentId, page, limit) {
 
         page = page == undefined ? 1 : page;
         limit = limit == undefined ? 10 : limit;
 
         const users = await Users.findAndCountAll({
-            include: [Departments, Jobs],
             where: {
                 departmentId,
             },
@@ -117,6 +65,43 @@ class UsersModel {
         };
 
 
+    }
+
+
+    static async addUser(data) {
+        return await Users.create(data)
+    }
+
+
+    static async updateUser(data) {
+        const { id } = data;
+        return await Users.update(
+            {
+                where: {
+                    id
+                },
+            })
+    }
+
+
+    static async deleteUser(data) {
+        const { id } = data;
+        return await Users.destroy({
+            where: {
+                id,
+            },
+        })
+    }
+
+
+
+    static async deleteUsersByDepartmentID(data) {
+        const { departmentId } = data;
+        return await Users.destroy({
+            where: {
+                departmentId
+            },
+        })
     }
 }
 
