@@ -106,22 +106,7 @@ class usersController {
 
         const id = ctx.params.id;
 
-        let info = await UsersModel.getInfo(id);
-        let roles = await UsersRolesModel.getRolesByUserId(id);
-        let role = [];
-        let menu = [];
-        for (let x in roles) {
-            role.push(roles[x].role.RoleName);
-            let menus = await RolesMenusModel.getMenusByRoleId(roles[x].role.ID);
-            for (let x in menus) {
-                menu.push({
-                    name:menus[x].menu.MenuName,
-                    roles:role
-                });
-            }
-        }
-
-        const data = Object.assign(JSON.parse(JSON.stringify(info)), { roles: role, menus:Utils.unique(menu)});
+        const data = await UsersModel.getInfo(id);
 
         ctx.body = {
             code: 200,

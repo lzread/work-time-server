@@ -30,7 +30,7 @@ class RolesMenusModel {
     static async getMenus() {
 
 
-        return await Sequelize.query('SELECT t1.ID, t1.MenuName,( SELECT GROUP_CONCAT(t3.RoleName) FROM roles_menus t2 LEFT JOIN roles t3 ON t3.ID = t2.RoleId WHERE t2.MenuId = t1.ID) AS RoleName FROM menus t1', {
+        return await Sequelize.query('SELECT t1.ID,t1.MenuName AS name,(SELECT GROUP_CONCAT(t3.RoleName) FROM roles_menus t2 LEFT JOIN roles t3 ON t3.ID=t2.RoleId WHERE t2.MenuId=t1.ID) AS roles FROM menus t1', {
             type: Sequelize.QueryTypes.SELECT
         });
         

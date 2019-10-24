@@ -36,12 +36,9 @@ class UsersModel {
     }
 
     static async getInfo(id) {
-
-        return await Users.findOne({
-            where: {
-                id,
-            },
-        })
+        return await Sequelize.query(`SELECT t1.ID,t1.UserName,(SELECT GROUP_CONCAT(t3.RoleName) FROM users_roles t2 LEFT JOIN roles t3 ON t3.ID=t2.RoleId WHERE t2.UserId=t1.ID) AS roles FROM users t1 WHERE t1.ID = ${id}`, {
+            type: Sequelize.QueryTypes.SELECT
+        });
     }
 
 
