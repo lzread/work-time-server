@@ -1,5 +1,8 @@
 const Koa = require('koa')
-const app = new Koa()
+const koajwt = require('koa-jwt')
+const koabody = require('koa-body');
+
+
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
@@ -7,9 +10,35 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa-cors');
 
+const SECRET = 'token';
+
+const app = new Koa()
+
 // 使用koa-cors
 app.use(cors());
 
+// 使用koa-body
+app.use(koabody());
+
+// 中间件对token进行验证
+app.use(async (ctx, next) => {
+  return next().catch((err) => {
+    if (err.status === 401) {
+      ctx.status = 401;
+      ctx.body = {
+        code: 401,
+        msg: err.message
+      }
+    } else {
+      throw err;
+    }
+  })
+});
+
+app.use(koajwt({ secret: SECRET }).unless({
+  // 登录接口不需要验证
+  path: [/^\/api\/user\/login/]
+}));
 
 const index = require('./routes/index')
 
@@ -18,7 +47,7 @@ onerror(app)
 
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())

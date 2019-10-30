@@ -7,20 +7,17 @@ class userController {
     static async login(ctx) {
         const req = ctx.request.body;
         try {
+            const info = await UserModel.login(req.username, req.password);
+            if (info) {
 
+                const token = jwt.sign({ username: req.username, password: req.password }, 'token', {
+                    expiresIn: 60 * 60 * 1  // 1小时过期
+                });
 
+                const data = {};
+                data.id = info.id;
+                data.token = token;
 
-            let privateKey = 'worktime';
-            let token = jwt.sign({ username: req.username }, privateKey, {
-                expiresIn: 60 * 60 * 1  // 1小时过期
-            });
-
-            const loginInfo = await UserModel.login(req.username, req.password);
-
-            const data = Object.assign(JSON.parse(JSON.stringify(loginInfo)), { token: token });
-
-
-            if (data) {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -49,7 +46,7 @@ class userController {
     static async getInfo(ctx) {
         const id = ctx.params.id;
         const info = await UserModel.getInfo(id);
-        info.role = info.role.split(",")
+        info.role = info.role ? info.role.split(",") : info.role;
         const data = info;
         ctx.body = {
             code: 200,
