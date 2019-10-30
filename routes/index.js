@@ -4,12 +4,19 @@
  */
 const Router = require('koa-router')
 
-const UsersController = require('../controllers/users')
-const DepartmentsController = require('../controllers/departments')
-const RolesController = require('../controllers/roles')
-const MenusController = require('../controllers/menus')
-const RolesMenusController = require('../controllers/roles_menus')
-const UsersRolesController = require('../controllers/users_roles')
+const UserController = require('../controllers/user')
+const DeptController = require('../controllers/dept')
+const JobController = require('../controllers/job')
+const MenuController = require('../controllers/menu')
+const PowerController = require('../controllers/power')
+const RoleController = require('../controllers/role')
+
+const RoleMenuController = require('../controllers/role_menu')
+const RolePowerController = require('../controllers/role_power')
+
+const UserDeptController = require('../controllers/user_dept')
+const UserJobController = require('../controllers/user_job')
+const UserRoleController = require('../controllers/user_role')
 
 
 
@@ -18,35 +25,17 @@ const UsersRolesController = require('../controllers/users_roles')
 
 
 const router = new Router({
-    prefix: '/api/v1'
+    prefix: '/api'
 })
 
 
 
-router.post('/user/login', UsersController.login);
-router.post('/user/addUser', UsersController.addUser);
-
-router.get('/user/getInfo/:id', UsersController.getInfo);
-router.get('/user/getUsersByDepartmentID/:id', UsersController.getUsersByDepartmentID);
+router.post('/user/login', UserController.login);
+router.get('/user/getInfo/:id', UserController.getInfo);
 
 
 
-router.post('/department/addDepartment', DepartmentsController.addDepartment);
-router.post('/department/updateDepartment', DepartmentsController.updateDepartment);
-
-router.get('/department/getDepartments', DepartmentsController.getDepartments);
-router.get('/department/deleteDepartment/:id', DepartmentsController.deleteDepartment);
-
-
-
-router.get('/role/getRoles/:id', RolesController.getRoles);
-router.post('/role/addRole', RolesController.addRole);
-router.post('/role/updateRole', RolesController.updateRole);
-router.get('/role/deleteRole/:id', RolesController.deleteRole);
-
-
-
-router.get('/roles_menus/getMenus', RolesMenusController.getMenus);
+router.get('/menu/routes', MenuController.routes);
 
 
 module.exports = router
