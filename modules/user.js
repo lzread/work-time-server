@@ -15,7 +15,11 @@ User.sync({ force: false });
 class UserModel {
 
 
-
+    /**
+     * 登录
+     * @param {string} username 用户名
+     * @param {string} password 密码
+     */
     static async login(username, password) {
         return await User.findOne({
             attributes: ['id'],
@@ -26,8 +30,12 @@ class UserModel {
         })
     }
 
+    /**
+     * 查询用户详细信息 包含角色信息
+     * @param {int} id 用户ID
+     */
     static async getInfo(id) {
-        return await Sequelize.query(`SELECT  t1.ID,t1.username,(SELECT GROUP_CONCAT(t3.role_name) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS role FROM user t1 WHERE t1.id = ${id} `, {
+        return await Sequelize.query(`SELECT  t1.ID,t1.username,(SELECT GROUP_CONCAT(t3.role_name) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS roles FROM user t1 WHERE t1.id = ${id} `, {
             // 如果plain为true,则sequelize将仅返回结果集的第一条记录. 
             // 如果是false,它将返回所有记录.
             plain: true,

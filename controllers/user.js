@@ -7,17 +7,14 @@ class userController {
     static async login(ctx) {
         const req = ctx.request.body;
         try {
-            const info = await UserModel.login(req.username, req.password);
-            if (info) {
-
+            const query = await UserModel.login(req.username, req.password);
+            const data = {};
+            if (query) {
                 const token = jwt.sign({ username: req.username, password: req.password }, 'token', {
                     expiresIn: 60 * 60 * 1  // 1小时过期
                 });
-
-                const data = {};
-                data.id = info.id;
+                data.id = query.id;
                 data.token = token;
-
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -32,27 +29,47 @@ class userController {
                     data
                 }
             }
-        } catch (err) {
+        } catch (error) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
                 message: '登录失败',
             }
         }
-
     }
 
 
     static async getInfo(ctx) {
         const id = ctx.params.id;
-        const info = await UserModel.getInfo(id);
-        info.role = info.role ? info.role.split(",") : info.role;
-        const data = info;
-        ctx.body = {
-            code: 200,
-            message: '查询成功',
-            data,
+        try {
+            const query = await UserModel.getInfo(id);
+            if (query) {
+                query.roles = query.roles ? query.roles.split(",") : [];
+                const data = query;
+                console.log(data);
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 200,
+                    message: '查询成功',
+                    data,
+                }
+            } else {
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 412,
+                    message: '无数据',
+                }
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '查询失败',
+            }
         }
+
+
+
     }
 
 

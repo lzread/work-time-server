@@ -4,6 +4,8 @@
  */
 const Router = require('koa-router')
 
+
+
 const UserController = require('../controllers/user')
 const DeptController = require('../controllers/dept')
 const JobController = require('../controllers/job')
@@ -35,7 +37,9 @@ router.get('/user/getInfo/:id', UserController.getInfo);
 
 
 
-router.get('/menu/routes', MenuController.routes);
-
+router.get('/menu/getMenus', MenuController.getMenus);
+router.post('/menu/addMenu', MenuController.addMenu);
+router.post('/menu/updateMenu', MenuController.updateMenu);
+router.get('/menu/deleteMenu/:id', MenuController.deleteMenu);
 
 module.exports = router
