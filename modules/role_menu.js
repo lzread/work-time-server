@@ -26,6 +26,39 @@ RoleMenu.sync({ force: false });
 class RoleMenuModel {
 
 
+    /**
+     * 根据角色ID查询关联的菜单ID列表
+     * @param {int} role_id 角色ID
+     */
+    static async getRoleIdByMenuId(role_id) {
+        return await RoleMenu.findAll({
+            where: {
+                role_id
+            }
+        });
+    }
+
+    /**
+     * 新建 '角色' 关联 '菜单'
+     * @param {*} data 角色ID, 菜单ID
+     */
+    static async addRoleMenu(data) {
+        return await RoleMenu.bulkCreate(data)
+    }
+
+    /**
+     * 根据角色ID删除
+     * @param {int} role_id 角色ID
+     */
+    static async deleteRoleMenu(role_id) {
+        return await RoleMenu.destroy({
+            where: {
+                role_id
+            }
+        })
+    }
+
+
 
 }
 

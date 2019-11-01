@@ -1,141 +1,214 @@
 /*
- Navicat Premium Data Transfer
+Navicat MySQL Data Transfer
 
- Source Server         : localhost_3306
- Source Server Type    : MySQL
- Source Server Version : 80018
- Source Host           : localhost:3306
- Source Schema         : worktimedb
+Source Server         : localhost_3306
+Source Server Version : 80017
+Source Host           : localhost:3306
+Source Database       : worktimedb
 
- Target Server Type    : MySQL
- Target Server Version : 80018
- File Encoding         : 65001
+Target Server Type    : MYSQL
+Target Server Version : 80017
+File Encoding         : 65001
 
- Date: 24/10/2019 22:03:30
+Date: 2019-11-01 17:56:26
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for departments
+-- Table structure for dept
 -- ----------------------------
-DROP TABLE IF EXISTS `departments`;
-CREATE TABLE `departments` (
+DROP TABLE IF EXISTS `dept`;
+CREATE TABLE `dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `parentId` int(11) DEFAULT NULL,
-  `desc` text,
+  `dept_name` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Table structure for menus
+-- Records of dept
 -- ----------------------------
-DROP TABLE IF EXISTS `menus`;
-CREATE TABLE `menus` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MenuName` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Records of menus
+-- Table structure for job
 -- ----------------------------
-BEGIN;
-INSERT INTO `menus` VALUES (1, 'flow');
-INSERT INTO `menus` VALUES (2, 'flowList');
-INSERT INTO `menus` VALUES (3, 'flowSettings');
-INSERT INTO `menus` VALUES (4, 'flowCategory');
-INSERT INTO `menus` VALUES (5, 'flowTemplate');
-INSERT INTO `menus` VALUES (6, 'forms');
-INSERT INTO `menus` VALUES (7, 'system');
-COMMIT;
+DROP TABLE IF EXISTS `job`;
+CREATE TABLE `job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_name` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Table structure for roles
+-- Records of job
 -- ----------------------------
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `RoleName` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Records of roles
+-- Table structure for menu
 -- ----------------------------
-BEGIN;
-INSERT INTO `roles` VALUES (1, 'admin');
-INSERT INTO `roles` VALUES (2, 'editor');
-INSERT INTO `roles` VALUES (3, 'developer');
-COMMIT;
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_name` varchar(255) NOT NULL,
+  `route_name` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `hidden` varchar(255) DEFAULT 'false',
+  `parent_id` varchar(255) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Table structure for roles_menus
+-- Records of menu
 -- ----------------------------
-DROP TABLE IF EXISTS `roles_menus`;
-CREATE TABLE `roles_menus` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `RoleId` int(11) NOT NULL,
-  `MenuId` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `menu` VALUES ('8', 'workflow', 'workflow', null, 'false', '0');
+INSERT INTO `menu` VALUES ('9', 'workflowList', 'work list', null, 'false', '8');
+INSERT INTO `menu` VALUES ('10', 'workflowSettings', 'workflow settings', null, 'false', '8');
+INSERT INTO `menu` VALUES ('11', 'workflowCategory', 'workflow category', null, 'false', '10');
+INSERT INTO `menu` VALUES ('12', 'workflowTemplate', 'workflow template', null, 'false', '10');
+INSERT INTO `menu` VALUES ('13', 'forms', 'forms', null, 'false', '8');
+INSERT INTO `menu` VALUES ('14', 'formCreate', 'form create', null, 'false', '13');
+INSERT INTO `menu` VALUES ('15', 'formList', 'form list', null, 'false', '13');
+INSERT INTO `menu` VALUES ('16', 'formStore', 'form store', null, 'false', '13');
+INSERT INTO `menu` VALUES ('17', 'workflowStore', 'workflow store', null, 'false', '8');
+INSERT INTO `menu` VALUES ('18', 'system', 'system', null, 'false', '0');
+INSERT INTO `menu` VALUES ('19', 'organization', 'organization', null, 'false', '18');
+INSERT INTO `menu` VALUES ('20', 'permission', 'permission', null, 'false', '18');
 
 -- ----------------------------
--- Records of roles_menus
+-- Table structure for power
 -- ----------------------------
-BEGIN;
-INSERT INTO `roles_menus` VALUES (1, 3, 1);
-INSERT INTO `roles_menus` VALUES (2, 3, 2);
-INSERT INTO `roles_menus` VALUES (3, 3, 3);
-INSERT INTO `roles_menus` VALUES (4, 3, 4);
-INSERT INTO `roles_menus` VALUES (5, 3, 5);
-INSERT INTO `roles_menus` VALUES (6, 2, 6);
-INSERT INTO `roles_menus` VALUES (7, 2, 7);
-INSERT INTO `roles_menus` VALUES (8, 2, 2);
-INSERT INTO `roles_menus` VALUES (9, 2, 1);
-COMMIT;
+DROP TABLE IF EXISTS `power`;
+CREATE TABLE `power` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `power_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Table structure for users
+-- Records of power
 -- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserName` varchar(255) NOT NULL,
-  `UserPass` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Records of users
+-- Table structure for role
 -- ----------------------------
-BEGIN;
-INSERT INTO `users` VALUES (1, 'lizhuang', '123456');
-INSERT INTO `users` VALUES (2, 'lzread', '123456');
-INSERT INTO `users` VALUES (3, 'eason', '123456');
-COMMIT;
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) NOT NULL,
+  `role_desc` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Table structure for users_roles
+-- Records of role
 -- ----------------------------
-DROP TABLE IF EXISTS `users_roles`;
-CREATE TABLE `users_roles` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserId` int(11) NOT NULL,
-  `RoleId` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `role` VALUES ('1', 'admin1', '12e21e12e12e', '0');
+INSERT INTO `role` VALUES ('2', 'a2', 'e21e', '0');
+INSERT INTO `role` VALUES ('3', 'a1', '1e12e', '0');
+INSERT INTO `role` VALUES ('4', 'dw', 'dw', '0');
+INSERT INTO `role` VALUES ('5', 'editor', null, '0');
 
 -- ----------------------------
--- Records of users_roles
+-- Table structure for role_menu
 -- ----------------------------
-BEGIN;
-INSERT INTO `users_roles` VALUES (1, 1, 1);
-INSERT INTO `users_roles` VALUES (2, 1, 2);
-INSERT INTO `users_roles` VALUES (3, 1, 3);
-INSERT INTO `users_roles` VALUES (4, 2, 2);
-COMMIT;
+DROP TABLE IF EXISTS `role_menu`;
+CREATE TABLE `role_menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- ----------------------------
+-- Records of role_menu
+-- ----------------------------
+INSERT INTO `role_menu` VALUES ('35', '5', '8');
+INSERT INTO `role_menu` VALUES ('36', '5', '9');
+
+-- ----------------------------
+-- Table structure for role_power
+-- ----------------------------
+DROP TABLE IF EXISTS `role_power`;
+CREATE TABLE `role_power` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
+  `power_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of role_power
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `realname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `introduction` text,
+  `status` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', 's1', '123456', '张三', null, null, null, '', '0');
+INSERT INTO `user` VALUES ('2', 's2', '123456', '李四', null, null, null, null, '0');
+
+-- ----------------------------
+-- Table structure for user_dept
+-- ----------------------------
+DROP TABLE IF EXISTS `user_dept`;
+CREATE TABLE `user_dept` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `dept_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_dept
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for user_job
+-- ----------------------------
+DROP TABLE IF EXISTS `user_job`;
+CREATE TABLE `user_job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_job
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_role
+-- ----------------------------
+INSERT INTO `user_role` VALUES ('1', '1', '1');
+INSERT INTO `user_role` VALUES ('2', '2', '5');

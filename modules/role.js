@@ -22,7 +22,7 @@ class RoleModel {
      * 查询角色列表
      */
     static async getRoles() {
-        return await User.findAll();
+        return await Role.findAll();
     }
 
     /**
@@ -40,6 +40,7 @@ class RoleModel {
     static async updateRole(data) {
         const { id } = data;
         return await Role.update(
+            data,
             {
                 where: {
                     id

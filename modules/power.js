@@ -9,7 +9,7 @@ class PowerModel {
      * 查询权限列表
      */
     static async getPowers() {
-        return await User.findAll();
+        return await Depts.findAll();
     }
 
     /**

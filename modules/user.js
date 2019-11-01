@@ -45,7 +45,53 @@ class UserModel {
     }
 
 
-    
+    /**
+     * 查询用户列表 包含角色信息
+     */
+    static async getUsers() {
+        return await Sequelize.query(`SELECT  t1.ID,t1.username,t1.realname,t1.email,t1.phone,t1.avatar,t1.introduction,t1.status,(SELECT GROUP_CONCAT(t3.role_name) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS roles FROM user t1`, {
+            plain: false,
+            type: Sequelize.QueryTypes.SELECT
+        });
+    }
+
+    /**
+     * 新建用户
+     * @param {*} data 用户数据模型
+     */
+    static async addUser(data) {
+        return await Users.create(data)
+    }
+
+    /**
+     * 更新用户
+     * @param {*} data 用户数据模型
+     */
+    static async updateUser(data) {
+        const { id } = data;
+        return await Users.update(
+            {
+                where: {
+                    id
+                }
+            })
+    }
+
+    /**
+     * 删除用户
+     * @param {*} id 用户ID
+     */
+    static async deleteUser(id) {
+        return await Users.destroy({
+            where: {
+                id
+            }
+        })
+    }
+
+
+
+
 
 
 }

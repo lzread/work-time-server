@@ -9,7 +9,7 @@ class DeptModel {
      * 查询部门列表
      */
     static async getDepts() {
-        return await User.findAll();
+        return await Depts.findAll();
     }
 
     /**

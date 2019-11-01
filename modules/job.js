@@ -9,7 +9,7 @@ class JobModel {
      * 查询职务列表
      */
     static async getJobs() {
-        return await User.findAll();
+        return await Depts.findAll();
     }
 
     /**
