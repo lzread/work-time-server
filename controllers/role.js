@@ -8,6 +8,9 @@ class RoleController {
     static async getRoles(ctx) {
         try {
             const data = await RoleModel.getRoles();
+
+
+
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
@@ -32,18 +35,30 @@ class RoleController {
     static async addRole(ctx) {
         const req = ctx.request.body;
         try {
-            const data = await RoleModel.addRole(req);
-            ctx.response.status = 200;
-            ctx.body = {
-                code: 200,
-                msg: '创建成功',
-                data
+            //判断当前角色名称是否存在
+            const exist = await RoleModel.getRoleNameExist(req.role_name);
+            console.log(exist);
+            if (!exist) {
+                const data = await RoleModel.addRole(req);
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 200,
+                    msg: '操作成功',
+                    data
+                }
+            } else{
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 412,
+                    msg: '操作失败,当前角色名称已存在',
+                }
             }
+            
         } catch (error) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '创建失败',
+                msg: '操作失败',
             }
         }
     }
@@ -59,13 +74,13 @@ class RoleController {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
-                    msg: '更新成功',
+                    msg: '操作成功',
                 }
             } else {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 412,
-                    msg: '更新失败',
+                    msg: '操作失败',
                 }
             }
 
@@ -73,7 +88,7 @@ class RoleController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '更新失败',
+                msg: '操作失败',
             }
         }
     }
@@ -89,13 +104,13 @@ class RoleController {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
-                    msg: '删除成功',
+                    msg: '操作成功',
                 }
             } else {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 412,
-                    msg: '删除失败',
+                    msg: '操作失败',
                 }
             }
 
@@ -103,7 +118,7 @@ class RoleController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '删除失败',
+                msg: '操作失败',
             }
         }
     }

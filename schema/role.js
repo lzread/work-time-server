@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             field: 'role_desc',
         },
-        // 状态 0 正常 1 停用 2删除
+        // 状态 -1 无法操作 0 正常 1 停用 2删除
         status: {
             type: DataTypes.INTEGER,
             allowNull: true,
