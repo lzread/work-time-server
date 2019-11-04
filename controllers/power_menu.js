@@ -1,14 +1,14 @@
-const RoleMenuModel = require('../modules/role_menu')
+const PowerMenuModel = require('../modules/power_menu')
 
-class RoleMenuController {
+class PowerMenuController {
 
     /**
      * 根据角色ID查询关联的菜单ID列表
      */
-    static async getRoleIdByMenuId(ctx) {
-        const role_id = ctx.params.role_id;
+    static async getPowerIdByMenuId(ctx) {
+        const power_id = ctx.params.power_id;
         try {
-            const data = await RoleMenuModel.getRoleIdByMenuId(role_id);
+            const data = await PowerMenuModel.getPowerIdByMenuId(power_id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
@@ -27,15 +27,15 @@ class RoleMenuController {
     /**
      * 新建 '角色' 关联 '菜单'
      */
-    static async addRoleMenu(ctx) {
+    static async addPowerMenu(ctx) {
         const req = ctx.request.body;
-        const role_id = ctx.params.role_id;
+        const power_id = ctx.params.power_id;
         try {
-            if (role_id) {
+            if (power_id) {
                 //先删在创建，防止数据重复
-                RoleMenuModel.deleteRoleMenu(role_id);
+                PowerMenuModel.deletePowerMenu(power_id);
                 
-                const data = await RoleMenuModel.addRoleMenu(req);
+                const data = await PowerMenuModel.addPowerMenu(req);
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -60,4 +60,4 @@ class RoleMenuController {
     }
 
 }
-module.exports = RoleMenuController
+module.exports = PowerMenuController

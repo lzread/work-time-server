@@ -1,10 +1,10 @@
 /**
 ├── schema
-    └── role_menu.js
+    └── power_menu.js
     角色与菜单关联表
 */
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('role_menu', {
+    return sequelize.define('power_menu', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -12,10 +12,10 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true,
         },
         //角色ID
-        role_id: {
+        power_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'role_id',
+            field: 'power_id',
         },
         //菜单ID
         menu_id: {

@@ -13,7 +13,7 @@ const MenuController = require('../controllers/menu')
 const PowerController = require('../controllers/power')
 const RoleController = require('../controllers/role')
 
-const RoleMenuController = require('../controllers/role_menu')
+const PowerMenuController = require('../controllers/power_menu')
 const RolePowerController = require('../controllers/role_power')
 
 const UserDeptController = require('../controllers/user_dept')
@@ -30,8 +30,8 @@ const router = new Router({
     prefix: '/api'
 })
 
-router.get('/role_menu/getRoleIdByMenuId/:role_id', RoleMenuController.getRoleIdByMenuId);
-router.post('/role_menu/addRoleMenu/:role_id', RoleMenuController.addRoleMenu);
+//router.get('/power_menu/getRoleIdByMenuId/:role_id', PowerMenuController.getRoleIdByMenuId);
+//router.post('/power_menu/addPowerMenu/:role_id', PowerMenuController.addPowerMenu);
 
 /**
  * 用户相关
