@@ -10,11 +10,11 @@ const UserController = require('../controllers/user')
 const DeptController = require('../controllers/dept')
 const JobController = require('../controllers/job')
 const MenuController = require('../controllers/menu')
-const PowerController = require('../controllers/power')
+//const PowerController = require('../controllers/power')
 const RoleController = require('../controllers/role')
 
-const PowerMenuController = require('../controllers/power_menu')
-const RolePowerController = require('../controllers/role_power')
+const RoleMenuController = require('../controllers/role_menu')
+// const RolePowerController = require('../controllers/role_power')
 
 const UserDeptController = require('../controllers/user_dept')
 const UserJobController = require('../controllers/user_job')
@@ -67,13 +67,7 @@ router.post('/menu/addMenu', MenuController.addMenu);
 router.post('/menu/updateMenu', MenuController.updateMenu);
 router.get('/menu/deleteMenu/:id', MenuController.deleteMenu);
 
-/**
- * 权限相关
- */
-router.get('/power/getPowers', PowerController.getPowers);
-router.post('/power/addPower', PowerController.addPower);
-router.post('/power/updatePower', PowerController.updatePower);
-router.get('/power/deletePower/:id', PowerController.deletePower);
+
 
 /**
  * 角色相关
