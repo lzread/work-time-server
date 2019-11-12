@@ -10,6 +10,35 @@ class MenuModel {
      * 查询菜单列表
      */
     static async getMenus() {
+        /**
+         SELECT
+            t1.id,
+            t1.menu_name AS NAME,
+            t1.route_name AS title,
+            t1.icon,
+            t1.hidden,
+            t1.parent_id,
+            (
+                SELECT
+                    GROUP_CONCAT(t3.role_name)
+                FROM
+                    role_menu t2
+                LEFT JOIN role t3 ON t3.id = t2.role_id
+                WHERE
+                    t2.menu_id = t1.id
+            ) AS role,
+            (
+                SELECT
+                    GROUP_CONCAT(t5.power_name)
+                FROM
+                    power_menu t4
+                LEFT JOIN power t5 ON t5.id = t4.power_id
+                WHERE
+                    t4.menu_id = t1.id
+            ) AS power
+        FROM
+            menu t1
+         */
         return await Sequelize.query('SELECT t1.id, t1.menu_name AS name, t1.route_name AS title, t1.icon, t1.hidden, t1.parent_id, (SELECT GROUP_CONCAT(t3.role_name) FROM role_menu t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.menu_id=t1.id) AS role FROM menu t1', {
             type: Sequelize.QueryTypes.SELECT
         });

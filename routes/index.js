@@ -10,11 +10,11 @@ const UserController = require('../controllers/user')
 const DeptController = require('../controllers/dept')
 const JobController = require('../controllers/job')
 const MenuController = require('../controllers/menu')
-//const PowerController = require('../controllers/power')
+const PowerController = require('../controllers/power')
 const RoleController = require('../controllers/role')
 
+const PowerMenuController = require('../controllers/role_power')
 const RoleMenuController = require('../controllers/role_menu')
-// const RolePowerController = require('../controllers/role_power')
 
 const UserDeptController = require('../controllers/user_dept')
 const UserJobController = require('../controllers/user_job')
