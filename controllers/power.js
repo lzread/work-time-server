@@ -2,26 +2,6 @@ const PowerModel = require('../modules/power')
 
 class PowerController {
 
-    /**
-     * 查询权限列表
-     */
-    static async getPowers(ctx) {
-        try {
-            const data = await PowerModel.getPowers();
-            ctx.response.status = 200;
-            ctx.body = {
-                code: 200,
-                message: '查询成功',
-                data,
-            }
-        } catch (error) {
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 416,
-                msg: '查询失败',
-            }
-        }
-    }
 
     /**
      * 新建权限

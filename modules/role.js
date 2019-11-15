@@ -24,6 +24,7 @@ class RoleModel {
     static async getRoles() {
         return await Role.findAll();
     }
+    
     /**
      * 查询当前角色名称是否存在
      * @param {*} role_name 角色名称

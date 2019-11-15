@@ -6,10 +6,15 @@ Power.sync({ force: false });
 
 class PowerModel {
     /**
-     * 查询权限列表
+     * 根据角色ID查询和菜单ID查询当前菜单节点分配的权限
+     * @param {*} role_id 角色ID
+     * @param {*} menu_id 菜单ID
      */
-    static async getPowers() {
-        return await Depts.findAll();
+    static async getPowerByRoleIdAndMenuId(role_id, menu_id) {
+        const sql = `SELECT t3.menu_name, GROUP_CONCAT(t2.power_name) FROM role_power t1 LEFT JOIN power t2 ON t1.power_id = t2.id LEFT JOIN menu t3 ON t2.menu_id = t3.id WHERE t1.role_id = ${role_id} AND t3.id = ${menu_id}`
+        return await Sequelize.query(sql, {
+            type: Sequelize.QueryTypes.SELECT
+        });
     }
 
     /**

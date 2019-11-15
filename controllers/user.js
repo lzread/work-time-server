@@ -1,4 +1,5 @@
 const UserModel = require('../modules/user')
+const PowerModel = require('../modules/power')
 const jwt = require('jsonwebtoken')
 
 class userController {
@@ -45,12 +46,14 @@ class userController {
             const query = await UserModel.getInfo(id);
             if (query) {
                 query.roles = query.roles ? query.roles.split(",") : [];
+                query.powers =  await PowerModel.getPowerByRoleId(query.role_ids);
+                query.role_ids = query.role_ids ? query.role_ids.split(",") : [];
                 const data = query;
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
                     message: '查询成功',
-                    data,
+                    data
                 }
             } else {
                 ctx.response.status = 200;

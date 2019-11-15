@@ -17,12 +17,24 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             field: 'power_name',
         },
-        //权限名称
+        //权限代码
+        power_code: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'power_code',
+        },
+        //权限描述
+        power_desc: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            field: 'power_desc'
+        },
+        //权限类别
         power_type: {
             type: DataTypes.INTEGER,
             allowNull: false,
             field: 'power_type',
-            defaultValue:'0' 
+            defaultValue: '0'
         },
         //菜单ID
         menu_id: {

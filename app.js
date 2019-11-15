@@ -18,28 +18,28 @@ app.use(cors());
 app.use(koabody());
 
 
-// 中间件对 token 进行验证
+// // 中间件对 token 进行验证
 
-app.use(async (ctx, next) => {
-  return next().catch((err) => {
-    if (err.status === 401) {
-      ctx.status = 401;
-      ctx.body = {
-        code: 401,
-        msg: err.message
-      }
-    } else {
-      throw err;
-    }
-  })
-});
+// app.use(async (ctx, next) => {
+//   return next().catch((err) => {
+//     if (err.status === 401) {
+//       ctx.status = 401;
+//       ctx.body = {
+//         code: 401,
+//         msg: err.message
+//       }
+//     } else {
+//       throw err;
+//     }
+//   })
+// });
 
 
-// 过滤不需要验证的接口 目前只有登录接口不需要验证
+// // 过滤不需要验证的接口 目前只有登录接口不需要验证
 
-app.use(koajwt({ secret: SECRET }).unless({
-  path: [/^\/api\/user\/login/]
-}));
+// app.use(koajwt({ secret: SECRET }).unless({
+//   path: [/^\/api\/user\/login/]
+// }));
 
 
 const index = require('./routes/index')
