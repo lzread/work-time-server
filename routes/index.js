@@ -43,6 +43,8 @@ router.post('/user/addUser', UserController.addUser);
 router.post('/user/updateUser', UserController.updateUser);
 router.get('/user/deleteUser/:id', UserController.deleteUser);
 
+router.post('/user_role/addUserRoleBatch/:id', UserRoleController.addUserRoleBatch);
+
 /**
  * 部门相关
  */
@@ -63,11 +65,9 @@ router.get('/job/deleteJob/:id', JobController.deleteJob);
  * 菜单相关
  */
 router.get('/menu/getMenus', MenuController.getMenus);
-router.post('/menu/addMenu', MenuController.addMenu);
-router.post('/menu/updateMenu', MenuController.updateMenu);
-router.get('/menu/deleteMenu/:id', MenuController.deleteMenu);
-
-
+router.get('/menu/getMenusByUserId/:id', MenuController.getMenusByUserId);
+router.get('/menu/getMenuPowersByRoleId/:id', MenuController.getMenuPowersByRoleId);
+router.get('/menu/getMenusByRoleId/:id', MenuController.getMenusByRoleId);
 
 /**
  * 角色相关
@@ -76,6 +76,8 @@ router.get('/role/getRoles', RoleController.getRoles);
 router.post('/role/addRole', RoleController.addRole);
 router.post('/role/updateRole', RoleController.updateRole);
 router.get('/role/deleteRole/:id', RoleController.deleteRole);
+
+
 
 
 module.exports = router

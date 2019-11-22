@@ -12,6 +12,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             autoIncrement: true,
         },
+        // 角色代码
+        role_code: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'role_code',
+        },
         // 角色名称
         role_name: {
             type: DataTypes.STRING,

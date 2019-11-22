@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
         //权限描述
         power_desc: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
             field: 'power_desc'
         },
         //权限类别

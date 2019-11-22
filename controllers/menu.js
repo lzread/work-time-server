@@ -21,7 +21,62 @@ class MenuController {
             }
         }
     }
+    static async getMenusByUserId(ctx){
+        const id = ctx.params.id;
+        try {
+            const data = await MenuModel.getMenusByUserId(id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '查询成功',
+                data,
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '查询失败',
+            }
+        }
+    }
 
+    static async getMenuPowersByRoleId(ctx){
+        const id = ctx.params.id;
+        try {
+            const data = await MenuModel.getMenuPowersByRoleId(id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '查询成功',
+                data,
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '查询失败',
+            }
+        }
+    }
+
+    static async getMenusByRoleId(ctx){
+        const id = ctx.params.id;
+        try {
+            const data = await MenuModel.getMenusByRoleId(id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '查询成功',
+                data,
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '查询失败',
+            }
+        }
+    }
     /**
      * 新建菜单
      */

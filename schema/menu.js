@@ -11,37 +11,55 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             autoIncrement: true,
         },
-        //菜单名称
-        menu_name: {
+        //名称
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'menu_name',
+            field: 'name',
         },
-        //路由名称
-        route_name: {
+        //标题
+        title: {
             type: DataTypes.STRING,
             allowNull: false,
-            field: 'route_name',
+            field: 'title',
         },
-        //菜单图标
+        //路径
+        path: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'path',
+        },
+        //组件
+        component: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'component',
+        },
+        //图标
         icon: {
             type: DataTypes.STRING,
             allowNull: true,
             field: 'icon',
+        },
+        //重定向
+        redirect: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'redirect',
         },
         //是否隐藏
         hidden: {
             type: DataTypes.STRING,
             allowNull: true,
             field: 'hidden',
-            defaultValue:'false' 
+            defaultValue: 'false'
         },
         //父级ID
         parent_id: {
             type: DataTypes.STRING,
             allowNull: true,
             field: 'parent_id',
-            defaultValue:'0' 
+            defaultValue: '0'
         },
 
     }, {

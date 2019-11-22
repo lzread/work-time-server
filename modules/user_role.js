@@ -4,6 +4,26 @@ const Op = db.Op;
 const UserRole = Sequelize.import('../schema/user_role');
 UserRole.sync({ force: false });
 
-class UserRoleModel {}
+class UserRoleModel {
+    /**
+     * 批量增加角色关联的用户
+     * @param {Object} data 用户ID和角色ID集合
+     */
+    static async addUserRoleBatch(data) {
+        return await UserRole.bulkCreate(data);
+    }
+
+    /**
+     * 删除用户和角色关联
+     * @param {*} id 角色ID
+     */
+    static async deleteUserRole(role_id) {
+        return await UserRole.destroy({
+            where: {
+                role_id
+            }
+        })
+    }
+}
 
 module.exports = UserRoleModel
