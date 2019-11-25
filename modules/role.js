@@ -39,7 +39,7 @@ class RoleModel {
     
     /**
      * 新建角色
-     * @param {string} data 角色数据模型
+     * @param {Object} data 角色数据模型
      */
     static async addRole(data) {
         return await Role.create(data)
@@ -47,7 +47,7 @@ class RoleModel {
 
     /**
      * 更新角色
-     * @param {*} data 角色数据模型
+     * @param {Object} data 角色数据模型
      */
     static async updateRole(data) {
         const { id } = data;
@@ -62,7 +62,7 @@ class RoleModel {
 
     /**
      * 删除角色
-     * @param {*} id 角色ID
+     * @param {Number} id 角色ID
      */
     static async deleteRole(id) {
         return await Role.destroy({

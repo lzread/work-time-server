@@ -1,5 +1,5 @@
 const UserModel = require('../modules/user')
-const PowerModel = require('../modules/power')
+const UserRoleModel = require('../modules/user_role')
 const jwt = require('jsonwebtoken')
 
 class userController {
@@ -39,14 +39,12 @@ class userController {
         }
     }
 
-
     static async getInfo(ctx) {
         const id = ctx.params.id;
         try {
             const query = await UserModel.getInfo(id);
             if (query) {
                 query.roles = query.roles ? query.roles.split(",") : [];
-                query.powers =  await PowerModel.getPowerByRoleId(query.role_ids);
                 query.role_ids = query.role_ids ? query.role_ids.split(",") : [];
                 const data = query;
                 ctx.response.status = 200;
@@ -74,10 +72,6 @@ class userController {
 
     }
 
-
-    /**
-     * 查询用户列表
-     */
     static async getUsers(ctx) {
         try {
             const data = await UserModel.getUsers();
@@ -96,9 +90,28 @@ class userController {
         }
     }
 
-    /**
-     * 新建用户
-     */
+    static async getUserByRoleId(ctx) {
+        const id = ctx.params.id;
+        try {
+            const data = await UserModel.getUserByRoleId(id);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '查询成功',
+                data
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '查询失败',
+            }
+        }
+
+
+
+    }
+
     static async addUser(ctx) {
         const req = ctx.request.body;
         try {
@@ -118,9 +131,6 @@ class userController {
         }
     }
 
-    /**
-     * 更新用户
-     */
     static async updateUser(ctx) {
         const req = ctx.request.body;
         try {
@@ -148,11 +158,10 @@ class userController {
         }
     }
 
-    /**
-     * 删除用户
-     */
     static async deleteUser(ctx) {
         const id = ctx.params.id;
+        //删除用户与角色关联
+        await UserRoleModel.deleteUserRoleByUserId(id);
         try {
             const data = await UserModel.deleteUser(id);
             if (data == 1) {
@@ -168,7 +177,6 @@ class userController {
                     msg: '删除失败',
                 }
             }
-
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {

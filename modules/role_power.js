@@ -12,19 +12,18 @@ const Op = db.Op;
 // 引入上一步的用户数据表模型文件
 const RolePower = Sequelize.import('../schema/role_power');
 
-
-
 // 自动创建表
 RolePower.sync({ force: false });
 
-
-
-
-
-
-
 class RolePowerModel {
 
+    /**
+     * 批量增加角色关联的权限
+     * @param {Object} data 权限ID和角色ID集合
+     */
+    static async addRolePowerBatch(data) {
+        return await RolePower.bulkCreate(data);
+    }
 
 
 }

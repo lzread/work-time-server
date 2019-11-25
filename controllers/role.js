@@ -1,5 +1,5 @@
 const RoleModel = require('../modules/role')
-
+const UserRoleModel = require('../modules/user_role');
 class RoleController {
 
 
@@ -25,9 +25,8 @@ class RoleController {
     static async addRole(ctx) {
         const req = ctx.request.body;
         try {
-            //判断当前角色名称是否存在
+            //判断当前角色代码是否存在
             const exist = await RoleModel.getRoleNameExist(req.role_code);
-            console.log(exist);
             if (!exist) {
                 const data = await RoleModel.addRole(req);
                 ctx.response.status = 200;
@@ -40,7 +39,7 @@ class RoleController {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 412,
-                    msg: '操作失败,当前角色名称已存在',
+                    msg: '操作失败,当前角色已存在',
                 }
             }
 
@@ -83,6 +82,8 @@ class RoleController {
 
     static async deleteRole(ctx) {
         const id = ctx.params.id;
+        //删除用户与角色关联
+        await UserRoleModel.deleteUserRoleByRoleId(id);
         try {
             const data = await RoleModel.deleteRole(id);
             if (data == 1) {

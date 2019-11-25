@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             field: 'power_desc'
         },
-        //权限类别
+        //权限类别 0 按钮
         power_type: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -41,6 +41,13 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             field: 'menu_id',
+        },
+        // 状态 0 正常 1 停用 2删除
+        status: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'status',
+            defaultValue:'0' 
         },
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user
