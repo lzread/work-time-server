@@ -30,7 +30,7 @@ class MenuModel {
      * @param {Number} id 角色ID
      */
     static async getMenuPowersByRoleId(id) {
-        return await Sequelize.query(`SELECT t4.id AS menu_id, t3.power_code FROM role t1 LEFT JOIN role_power t2 ON t1.id = t2.role_id LEFT JOIN power t3 ON t2.power_id = t3.id LEFT JOIN menu t4 ON t3.menu_id = t4.id WHERE t1.id = ${id}`, {
+        return await Sequelize.query(`SELECT t3.* FROM role t1 LEFT JOIN role_power t2 ON t1.id = t2.role_id LEFT JOIN power t3 ON t2.power_id = t3.id LEFT JOIN menu t4 ON t3.menu_id = t4.id WHERE t1.id = ${id}`, {
             type: Sequelize.QueryTypes.SELECT
         });
     }

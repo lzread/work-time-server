@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2019-11-22 16:39:42
+Date: 2019-11-29 17:37:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -85,17 +85,25 @@ CREATE TABLE `power` (
   `power_desc` text,
   `power_type` int(11) NOT NULL DEFAULT '0',
   `menu_id` int(11) NOT NULL,
+  `status` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of power
 -- ----------------------------
-INSERT INTO `power` VALUES ('1', '创建', 'create', null, '0', '3');
-INSERT INTO `power` VALUES ('2', '编辑', 'edit', null, '1', '3');
-INSERT INTO `power` VALUES ('3', '删除', 'remove', null, '1', '3');
-INSERT INTO `power` VALUES ('4', '创建', 'create', null, '0', '4');
-INSERT INTO `power` VALUES ('5', '编辑', 'edit', null, '1', '4');
+INSERT INTO `power` VALUES ('1', '新建', 'ADD', null, '0', '3', '0');
+INSERT INTO `power` VALUES ('2', '编辑', 'UPDATE', null, '0', '3', '0');
+INSERT INTO `power` VALUES ('3', '删除', 'DELETE', null, '0', '3', '0');
+INSERT INTO `power` VALUES ('4', '新建', 'ADD', null, '0', '5', '0');
+INSERT INTO `power` VALUES ('5', '编辑', 'UPDATE', null, '0', '5', '0');
+INSERT INTO `power` VALUES ('6', '删除', 'DELETE', null, '0', '5', '0');
+INSERT INTO `power` VALUES ('7', '新建', 'ADD', null, '0', '6', '0');
+INSERT INTO `power` VALUES ('8', '编辑', 'UPDATE', null, '0', '6', '0');
+INSERT INTO `power` VALUES ('9', '删除', 'DELETE', null, '0', '6', '0');
+INSERT INTO `power` VALUES ('10', '新建', 'ADD', null, '0', '8', '0');
+INSERT INTO `power` VALUES ('11', '编辑', 'UPDATE', null, '0', '8', '0');
+INSERT INTO `power` VALUES ('12', '删除', 'DELETE', null, '0', '8', '0');
 
 -- ----------------------------
 -- Table structure for role
@@ -222,13 +230,13 @@ CREATE TABLE `user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '1', '3');
 INSERT INTO `user_role` VALUES ('2', '1', '4');
-INSERT INTO `user_role` VALUES ('6', '1', '7');
-INSERT INTO `user_role` VALUES ('7', '2', '7');
-INSERT INTO `user_role` VALUES ('8', '3', '7');
+INSERT INTO `user_role` VALUES ('12', '1', '7');
+INSERT INTO `user_role` VALUES ('13', '2', '7');
+INSERT INTO `user_role` VALUES ('14', '3', '7');

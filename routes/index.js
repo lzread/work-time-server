@@ -10,7 +10,7 @@ const JobController = require('../controllers/job')
 const MenuController = require('../controllers/menu')
 const PowerController = require('../controllers/power')
 const RoleController = require('../controllers/role')
-const PowerMenuController = require('../controllers/role_power')
+const RolePowerController = require('../controllers/role_power')
 const RoleMenuController = require('../controllers/role_menu')
 const UserDeptController = require('../controllers/user_dept')
 const UserJobController = require('../controllers/user_job')
@@ -40,7 +40,7 @@ router.post('/user_role/addUserRoleBatch/:id', UserRoleController.addUserRoleBat
 
 
 router.get('/power/getPowers', PowerController.getPowers);
-
+router.post('/role_power/addRolePowerBatch/:id', RolePowerController.addRolePowerBatch);
 
 /**
  * 部门相关
