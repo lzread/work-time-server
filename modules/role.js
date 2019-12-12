@@ -26,8 +26,8 @@ class RoleModel {
     }
 
     /**
-     * 查询当前角色名称和角色代码是否存在
-     * @param {string} role_name 角色代码
+     * 查询当前角色代码是否存在
+     * @param {String} role_name 角色代码
      */
     static async getRoleNameExist(role_code) {
         return await Role.findOne({

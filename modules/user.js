@@ -31,7 +31,7 @@ class UserModel {
     }
 
     /**
-     * 查询用户详细信息 包含角色信息
+     * 获取用户信息
      * @param {Number} id 用户ID
      */
     static async getInfo(id) {
@@ -44,9 +44,8 @@ class UserModel {
         });
     }
 
-
     /**
-     * 查询所有用户
+     * 获取用户列表
      */
     static async getUsers() {
         return await Sequelize.query(`SELECT  t1.*,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS roles FROM user t1`, {
@@ -56,11 +55,11 @@ class UserModel {
     }
 
     /**
-     * 根据角色ID查询用户
+     * 获取用户列表
      * @param {Number} role_id 角色ID
      */
     static async getUserByRoleId(role_id) {
-        return await Sequelize.query(`SELECT t3.id, t3.realname FROM role t1 LEFT JOIN user_role t2 ON t1.id = t2.user_id LEFT JOIN USER t3 ON t2.user_id = t3.id WHERE t2.id = ${role_id}`, {
+        return await Sequelize.query(`SELECT t3.* FROM role t1 LEFT JOIN user_role t2 ON t1.id = t2.user_id LEFT JOIN USER t3 ON t2.user_id = t3.id WHERE t2.id = ${role_id}`, {
             plain: false,
             type: Sequelize.QueryTypes.SELECT
         });
@@ -68,7 +67,7 @@ class UserModel {
 
     /**
      * 新建用户
-     * @param {*} data 用户数据模型
+     * @param {Number} data 用户数据模型
      */
     static async addUser(data) {
         return await Users.create(data)
@@ -76,7 +75,7 @@ class UserModel {
 
     /**
      * 更新用户
-     * @param {*} data 用户数据模型
+     * @param {Number} data 用户数据模型
      */
     static async updateUser(data) {
         const { id } = data;
@@ -90,7 +89,7 @@ class UserModel {
 
     /**
      * 删除用户
-     * @param {*} id 用户ID
+     * @param {Number} id 用户ID
      */
     static async deleteUser(id) {
         return await Users.destroy({
@@ -99,10 +98,6 @@ class UserModel {
             }
         })
     }
-
-
-
-
 
 
 }

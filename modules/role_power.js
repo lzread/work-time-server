@@ -17,27 +17,6 @@ RolePower.sync({ force: false });
 
 class RolePowerModel {
 
-    /**
-     * 批量增加角色关联的权限
-     * @param {Object} data 权限ID和角色ID集合
-     */
-    static async addRolePowerBatch(data) {
-        return await RolePower.bulkCreate(data);
-    }
-
-    /**
-     * 根据角色ID删除权限和角色关联
-     * @param {Number} role_id 角色ID
-     */
-    static async deleteRolePowerByRoleId(role_id) {
-        return await RolePower.destroy({
-            where: {
-                role_id
-            }
-        })
-    }
-
-
 }
 
 module.exports = RolePowerModel

@@ -33,14 +33,14 @@ router.get('/user/getUserByRoleId/:id', UserController.getUserByRoleId);
 router.post('/user/addUser', UserController.addUser);
 router.post('/user/updateUser', UserController.updateUser);
 router.post('/user/deleteUser/:id', UserController.deleteUser);
+router.post('/user/addUserRoleBatch/:id', UserRoleController.addUserRoleBatch);
 
 
-router.post('/user_role/addUserRoleBatch/:id', UserRoleController.addUserRoleBatch);
+router.get('/power/getPowers/:menu_id', PowerController.getPowers);
+router.get('/power/getAssignPowers', PowerController.getAssignPowers);
+router.post('/power/addRolePower/:menu_id', PowerController.addRolePower);
 
 
-
-router.get('/power/getPowers', PowerController.getPowers);
-router.post('/role_power/addRolePowerBatch/:id', RolePowerController.addRolePowerBatch);
 
 /**
  * 部门相关
@@ -61,10 +61,7 @@ router.post('/job/deleteJob/:id', JobController.deleteJob);
 /**
  * 菜单相关
  */
-router.get('/menu/getMenus', MenuController.getMenus);
-router.get('/menu/getMenusByUserId/:id', MenuController.getMenusByUserId);
-router.get('/menu/getMenuPowersByRoleId/:id', MenuController.getMenuPowersByRoleId);
-router.get('/menu/getMenusByRoleId/:id', MenuController.getMenusByRoleId);
+router.get('/menu/getMenus/:id', MenuController.getMenus);
 
 /**
  * 角色相关

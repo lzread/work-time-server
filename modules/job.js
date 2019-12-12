@@ -6,7 +6,7 @@ Job.sync({ force: false });
 
 class JobModel {
     /**
-     * 查询职务列表
+     * 获取职务列表
      */
     static async getJobs() {
         return await Depts.findAll();
@@ -36,7 +36,7 @@ class JobModel {
 
     /**
      * 删除职务
-     * @param {*} id 职务ID
+     * @param {Number} id 职务ID
      */
     static async deleteJob(id) {
         return await Job.destroy({

@@ -6,8 +6,10 @@ class PowerController {
 
 
     static async getPowers(ctx) {
+
+        const menu_id = ctx.params.menu_id;
         try {
-            const data = await PowerModel.getPowers();
+            const data = await PowerModel.getPowers(menu_id);
 
             ctx.response.status = 200;
             ctx.body = {
@@ -23,6 +25,91 @@ class PowerController {
             }
         }
     }
+
+
+    static async getAssignPowers(ctx) {
+
+        const { menu_id, role_id } = ctx.request.query;
+
+        try {
+            const data = await PowerModel.getAssignPowers(menu_id, role_id);
+
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '查询成功',
+                data,
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '查询失败',
+            }
+        }
+    }
+
+
+    static async addRolePower(ctx) {
+
+        const {menu_id} = ctx.params;
+
+        const req = ctx.request.body;
+
+        
+
+        if (menu_id) {
+
+            try {
+
+                await PowerModel.deleteRolePower(menu_id);
+
+                const data = await PowerModel.addRolePower(req);
+
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 200,
+                    msg: '操作成功',
+                    data
+                }
+
+            } catch (error) {
+
+                ctx.response.status = 416;
+                ctx.body = {
+                    code: 416,
+                    msg: '操作失败',
+                }
+
+            }
+        } else {
+
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                msg: '参数不能为空',
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 新建权限

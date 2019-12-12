@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2019-11-29 17:37:34
+Date: 2019-12-12 17:46:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -157,16 +157,15 @@ CREATE TABLE `role_power` (
   `role_id` int(11) NOT NULL,
   `power_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of role_power
 -- ----------------------------
-INSERT INTO `role_power` VALUES ('1', '3', '1');
-INSERT INTO `role_power` VALUES ('2', '3', '2');
-INSERT INTO `role_power` VALUES ('3', '3', '3');
-INSERT INTO `role_power` VALUES ('4', '3', '4');
-INSERT INTO `role_power` VALUES ('5', '3', '5');
+INSERT INTO `role_power` VALUES ('21', '3', '9');
+INSERT INTO `role_power` VALUES ('44', '3', '1');
+INSERT INTO `role_power` VALUES ('45', '3', '2');
+INSERT INTO `role_power` VALUES ('46', '3', '3');
 
 -- ----------------------------
 -- Table structure for user

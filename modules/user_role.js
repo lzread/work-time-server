@@ -6,18 +6,20 @@ UserRole.sync({ force: false });
 
 class UserRoleModel {
 
-
-
     /**
-     * 批量增加角色关联的用户
-     * @param {Object} data 用户ID和角色ID集合
+     * 添加关联 用户角色
+     * @param {Array} data 
+     * [{
+     *      user_id : value,    用户ID
+     *      role_id : value     角色ID
+     * }]
      */
     static async addUserRoleBatch(data) {
         return await UserRole.bulkCreate(data);
     }
 
     /**
-     * 根据角色ID删除用户和角色关联
+     * 解除关联 用户角色
      * @param {Number} role_id 角色ID
      */
     static async deleteUserRoleByRoleId(role_id) {
@@ -27,6 +29,8 @@ class UserRoleModel {
             }
         })
     }
+
+
     /**
      * 根据用户ID删除用户和角色关联
      * @param {Number} user_id 角色ID

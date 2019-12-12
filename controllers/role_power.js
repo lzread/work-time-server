@@ -8,11 +8,13 @@ class RolePowerController {
 
         if (role_id) {
 
-            await RolePowerModel.deleteRolePowerByRoleId(role_id);
+            
 
             let req = [];
 
             for (let x in powers) {
+
+                await RolePowerModel.deleteRolePowerByRoleId(powers[x].id);
 
                 req.push({
                     power_id: powers[x].id,
@@ -20,6 +22,8 @@ class RolePowerController {
                 });
 
             }
+
+            console.log(req);
 
             try {
                 const data = await RolePowerModel.addRolePowerBatch(req);
