@@ -4,7 +4,10 @@ class PowerController {
 
 
 
-
+    /**
+     * 获取当前菜单节点权限列表
+     * @param {Number} menu_id 菜单ID
+     */
     static async getPowers(ctx) {
 
         const menu_id = ctx.params.menu_id;
@@ -29,7 +32,10 @@ class PowerController {
 
     static async getAssignPowers(ctx) {
 
+
         const { menu_id, role_id } = ctx.request.query;
+
+        console.log(ctx.request.query)
 
         try {
             const data = await PowerModel.getAssignPowers(menu_id, role_id);
@@ -49,50 +55,6 @@ class PowerController {
         }
     }
 
-
-    static async addRolePower(ctx) {
-
-        const {menu_id} = ctx.params;
-
-        const req = ctx.request.body;
-
-        
-
-        if (menu_id) {
-
-            try {
-
-                await PowerModel.deleteRolePower(menu_id);
-
-                const data = await PowerModel.addRolePower(req);
-
-                ctx.response.status = 200;
-                ctx.body = {
-                    code: 200,
-                    msg: '操作成功',
-                    data
-                }
-
-            } catch (error) {
-
-                ctx.response.status = 416;
-                ctx.body = {
-                    code: 416,
-                    msg: '操作失败',
-                }
-
-            }
-        } else {
-
-            ctx.response.status = 416;
-            ctx.body = {
-                code: 416,
-                msg: '参数不能为空',
-            }
-
-        }
-
-    }
 
 
 

@@ -1,5 +1,4 @@
 const UserModel = require('../modules/user')
-const UserRoleModel = require('../modules/user_role')
 const jwt = require('jsonwebtoken')
 
 class userController {
@@ -111,6 +110,8 @@ class userController {
 
 
     }
+
+
 
     static async addUser(ctx) {
         const req = ctx.request.body;

@@ -30,21 +30,7 @@ class PowerModel {
         });
     }
 
-    /**
-     * 删除角色和权限关联
-     * @param {Number} menu_id 菜单ID
-     */
-    static async deleteRolePower(menu_id) {
-        return await Sequelize.query(`DELETE FROM role_power a WHERE EXISTS(SELECT 1 FROM power b WHERE a.power_id = b.id AND b.menu_id = ${menu_id})`);
-    }
 
-    /**
-     * 增加角色和权限关联
-     * @param {Object} data 
-     */
-    static async addRolePower(data) {
-        return await RolePower.bulkCreate(data);
-    }
 
 
 

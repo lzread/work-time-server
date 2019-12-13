@@ -6,7 +6,7 @@ RoleMenu.sync({ force: false });
 
 class RoleMenuModel {
     /**
-     * 批量增加角色关联的菜单
+     * 增加角色关联的菜单
      * @param {Object} data 角色ID和菜单ID集合
      */
     static async addRoleMenuBatch(data) {

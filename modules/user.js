@@ -8,13 +8,10 @@ const db = require('../config/db');
 const Sequelize = db.sequelize;
 // 引入上一步的用户数据表模型文件
 const User = Sequelize.import('../schema/user');
-
 // 自动创建表
 User.sync({ force: false });
 
 class UserModel {
-
-
     /**
      * 登录
      * @param {String} username 用户名
@@ -29,7 +26,6 @@ class UserModel {
             },
         })
     }
-
     /**
      * 获取用户信息
      * @param {Number} id 用户ID
@@ -43,9 +39,8 @@ class UserModel {
             type: Sequelize.QueryTypes.SELECT
         });
     }
-
     /**
-     * 获取用户列表
+     * 获取所有用户列表
      */
     static async getUsers() {
         return await Sequelize.query(`SELECT  t1.*,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS roles FROM user t1`, {
@@ -53,7 +48,6 @@ class UserModel {
             type: Sequelize.QueryTypes.SELECT
         });
     }
-
     /**
      * 获取用户列表
      * @param {Number} role_id 角色ID
@@ -64,7 +58,6 @@ class UserModel {
             type: Sequelize.QueryTypes.SELECT
         });
     }
-
     /**
      * 新建用户
      * @param {Number} data 用户数据模型
@@ -72,7 +65,6 @@ class UserModel {
     static async addUser(data) {
         return await Users.create(data)
     }
-
     /**
      * 更新用户
      * @param {Number} data 用户数据模型
@@ -86,7 +78,6 @@ class UserModel {
                 }
             })
     }
-
     /**
      * 删除用户
      * @param {Number} id 用户ID

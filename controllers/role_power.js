@@ -2,46 +2,37 @@ const RolePowerModel = require('../modules/role_power')
 
 class RolePowerController {
 
-    static async addRolePowerBatch(ctx) {
-        const role_id = ctx.params.id;
-        const powers = ctx.request.body;
 
-        if (role_id) {
+    static async addRolePower(ctx) {
 
-            
+        const { menu_id } = ctx.params;
 
-            let req = [];
+        const req = ctx.request.body;
 
-            for (let x in powers) {
-
-                await RolePowerModel.deleteRolePowerByRoleId(powers[x].id);
-
-                req.push({
-                    power_id: powers[x].id,
-                    role_id
-                });
-
-            }
-
-            console.log(req);
+        if (menu_id) {
 
             try {
-                const data = await RolePowerModel.addRolePowerBatch(req);
+
+                await RolePowerModel.deleteRolePower(menu_id);
+
+                const data = await RolePowerModel.addRolePower(req);
+
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
                     msg: '操作成功',
                     data
                 }
+
             } catch (error) {
+
                 ctx.response.status = 416;
                 ctx.body = {
                     code: 416,
                     msg: '操作失败',
                 }
+
             }
-
-
         } else {
 
             ctx.response.status = 416;
@@ -53,6 +44,7 @@ class RolePowerController {
         }
 
     }
+
 
 }
 module.exports = RolePowerController
