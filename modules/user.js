@@ -31,7 +31,7 @@ class UserModel {
      * @param {Number} id 用户ID
      */
     static async getInfo(id) {
-        return await Sequelize.query(`SELECT t1.ID, t1.username,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS roles,(SELECT GROUP_CONCAT(t3.id)	FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS role_ids FROM USER t1 WHERE t1.id = ${id}`, {
+        return await Sequelize.query(`SELECT t1.*,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS roles,(SELECT GROUP_CONCAT(t3.id)	FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS role_ids FROM USER t1 WHERE t1.id = ${id}`, {
             // 如果plain为true,则sequelize将仅返回结果集的第一条记录. 
             // 如果是false,它将返回所有记录.
             plain: true,
@@ -53,7 +53,7 @@ class UserModel {
      * @param {Number} role_id 角色ID
      */
     static async getUserByRoleId(role_id) {
-        return await Sequelize.query(`SELECT t3.* FROM role t1 LEFT JOIN user_role t2 ON t1.id = t2.user_id LEFT JOIN USER t3 ON t2.user_id = t3.id WHERE t2.id = ${role_id}`, {
+        return await Sequelize.query(`SELECT t1.* FROM USER t1 LEFT JOIN user_role t2 ON t1.id = t2.user_id LEFT JOIN role t3 ON t2.role_id = t3.id WHERE t3.id = ${role_id}`, {
             plain: false,
             type: Sequelize.QueryTypes.SELECT
         });

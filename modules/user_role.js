@@ -10,16 +10,16 @@ class UserRoleModel {
      * @param {Object} data 
      */
     static async addUserRole(data) {
-        return await UserRole.bulkCreate(data)
+        return await UserRole.create(data)
     }
     /**
      * 删除用户角色关联
-     * @param {Number} role_id 角色ID
+     * @param {Number} user_id 用户ID
      */
-    static async deleteUserRole(role_id) {
+    static async deleteUserRole(user_id) {
         return await UserRole.destroy({
             where: {
-                role_id
+                user_id
             }
         })
     }

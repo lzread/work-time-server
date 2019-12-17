@@ -11,16 +11,16 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             autoIncrement: true,
         },
-        //名称
+        //路由名称
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             field: 'name',
         },
         //标题
         title: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             field: 'title',
         },
         //路径
@@ -59,6 +59,13 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: true,
             field: 'parent_id',
+            defaultValue: '0'
+        },
+        //功能分类 0菜单 1功能
+        type: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'type',
             defaultValue: '0'
         },
 

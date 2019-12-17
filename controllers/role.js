@@ -42,7 +42,6 @@ class RoleController {
                     msg: '操作失败,当前角色已存在',
                 }
             }
-
         } catch (error) {
             ctx.response.status = 416;
             ctx.body = {

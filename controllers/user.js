@@ -90,9 +90,9 @@ class userController {
     }
 
     static async getUserByRoleId(ctx) {
-        const id = ctx.params.id;
+        const role_id = ctx.params.role_id;
         try {
-            const data = await UserModel.getUserByRoleId(id);
+            const data = await UserModel.getUserByRoleId(role_id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
