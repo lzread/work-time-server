@@ -43,7 +43,7 @@ class UserModel {
      * 获取所有用户列表
      */
     static async getUsers() {
-        return await Sequelize.query(`SELECT  t1.*,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS roles FROM user t1`, {
+        return await Sequelize.query(`SELECT  t1.*,(SELECT GROUP_CONCAT(t3.id) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS role_ids FROM user t1`, {
             plain: false,
             type: Sequelize.QueryTypes.SELECT
         });

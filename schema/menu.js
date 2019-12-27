@@ -68,6 +68,13 @@ module.exports = function (sequelize, DataTypes) {
             field: 'type',
             defaultValue: '0'
         },
+        //排序
+        sort: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'sort',
+            defaultValue: '0'
+        },
 
     }, {
         // 如果为 true 则表的名称和 model 相同，即 user

@@ -13,12 +13,13 @@ class MenuController {
                 });
                 data.forEach(item => {
                     let parent = map[item.parent_id];
-                    
-                    if(item.role){
+
+                    if (item.role) {
                         item.role = item.role.split(',');
-                    }else{
+                    } else {
                         item.role = [];
                     }
+
 
                     if (parent) {
                         if (!Array.isArray(parent.children)) {
@@ -28,7 +29,7 @@ class MenuController {
                     } else {
                         obj.push(item);
                     }
-                   
+
                 });
                 return obj;
             }
@@ -61,9 +62,9 @@ class MenuController {
                 data.forEach(item => {
                     let parent = map[item.parent_id];
 
-                    if(item.role){
+                    if (item.role) {
                         item.role = item.role.split(',');
-                    }else{
+                    } else {
                         item.role = [];
                     }
 
@@ -81,7 +82,14 @@ class MenuController {
                             if (!Array.isArray(parent.permission)) {
                                 parent.permission = [];
                             }
-                            parent.permission.push(item.name);
+                            if (item.role.length > 0) {
+                                parent.permission.push({
+                                    code: item.name,
+                                    desc: item.title,
+                                    role: item.role
+                                });
+                            }
+
                         }
                     }
                 });

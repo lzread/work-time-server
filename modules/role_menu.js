@@ -5,6 +5,14 @@ const RoleMenu = Sequelize.import('../schema/role_menu');
 RoleMenu.sync({ force: false });
 
 class RoleMenuModel {
+
+    static async getRoleMenu(role_id) {
+        return await RoleMenu.findAll({
+            where: {
+                role_id
+            }
+        });
+    }
     /**
      * 增加角色关联的菜单
      * @param {Object} data 角色ID和菜单ID集合

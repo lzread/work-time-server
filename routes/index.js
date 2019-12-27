@@ -61,11 +61,13 @@ router.get('/menu/getAllMenus', MenuController.getAllMenus);
  * 角色相关
  */
 router.get('/role/getRoles', RoleController.getRoles);
+router.get('/role/getRoleNameExist/:role_code', RoleController.getRoleNameExist);
+
 router.post('/role/addRole', RoleController.addRole);
 router.post('/role/updateRole', RoleController.updateRole);
 router.post('/role/deleteRole/:id', RoleController.deleteRole);
 
-
-
+router.get('/role/getRoleMenu/:role_id', RoleMenuController.getRoleMenu);
+router.post('/role/addRoleMenuBatch/:role_id', RoleMenuController.addRoleMenuBatch);
 
 module.exports = router
