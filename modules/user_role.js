@@ -16,10 +16,20 @@ class UserRoleModel {
      * 删除用户角色关联
      * @param {Number} user_id 用户ID
      */
-    static async deleteUserRole(user_id) {
+    static async deleteUserRole(user_id, role_id) {
         return await UserRole.destroy({
             where: {
-                user_id
+                user_id,
+                role_id
+            }
+        })
+    }
+
+
+    static async deleteUserRoleByRoleId(role_id) {
+        return await UserRole.destroy({
+            where: {
+                role_id
             }
         })
     }

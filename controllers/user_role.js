@@ -19,9 +19,9 @@ class UserRoleController {
         }
     }
     static async deleteUserRole(ctx) {
-        const user_id = ctx.params.user_id;
+        const req = ctx.request.body;
         try {
-            const data = await UserRoleModel.deleteUserRole(user_id);
+            const data = await UserRoleModel.deleteUserRole(req.user_id, req.role_id);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
@@ -36,5 +36,8 @@ class UserRoleController {
             }
         }
     }
+
+
+
 }
 module.exports = UserRoleController

@@ -21,8 +21,16 @@ class RoleModel {
     /**
      * 查询角色列表
      */
-    static async getRoles() {
-        return await Role.findAll();
+    static async getRoles(page, limit) {
+        const role = await Role.findAndCountAll({
+            limit: limit,
+            offset: limit * (page - 1),
+            raw: true
+        })
+        return {
+            total: role.count,
+            rows: role.rows
+        };
     }
 
     /**
@@ -36,7 +44,7 @@ class RoleModel {
             }
         });
     }
-    
+
     /**
      * 新建角色
      * @param {Object} data 角色数据模型

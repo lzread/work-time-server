@@ -30,7 +30,8 @@ router.get('/user/getUserByRoleId/:role_id', UserController.getUserByRoleId);
 router.post('/user/addUser', UserController.addUser);
 router.post('/user/updateUser', UserController.updateUser);
 router.post('/user/deleteUser/:id', UserController.deleteUser);
-router.post('/user/addUserRole/:role_id', UserRoleController.addUserRole);
+router.post('/user/addUserRole', UserRoleController.addUserRole);
+router.post('/user/deleteUserRole', UserRoleController.deleteUserRole);
 
 
 

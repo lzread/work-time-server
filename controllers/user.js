@@ -72,13 +72,15 @@ class userController {
     }
 
     static async getUsers(ctx) {
+        const { page, limit } = ctx.query;
         try {
-            const data = await UserModel.getUsers();
+            const data = await UserModel.getUsers(parseInt(page), parseInt(limit));
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
                 message: '查询成功',
-                data,
+                data: data.rows,
+                total: data.total
             }
         } catch (error) {
             ctx.response.status = 416;

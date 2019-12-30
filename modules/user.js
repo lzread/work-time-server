@@ -42,11 +42,16 @@ class UserModel {
     /**
      * 获取所有用户列表
      */
-    static async getUsers() {
-        return await Sequelize.query(`SELECT  t1.*,(SELECT GROUP_CONCAT(t3.id) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS role_ids FROM user t1`, {
+    static async getUsers(page, limit) {
+        const users = await Sequelize.query(`SELECT  t1.*, (SELECT GROUP_CONCAT(t3.id) FROM user_role t2 LEFT JOIN role t3 ON t3.id=t2.role_id WHERE t2.user_id=t1.id) AS role_ids FROM user t1 limit ${limit} OFFSET ${limit * (page - 1)}`, {
             plain: false,
-            type: Sequelize.QueryTypes.SELECT
+            type: Sequelize.QueryTypes.SELECT,
         });
+        const { count } = await User.findAndCountAll();
+        return {
+            total: count,
+            rows: users
+        };
     }
     /**
      * 获取用户列表

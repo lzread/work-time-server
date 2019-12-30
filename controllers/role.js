@@ -4,14 +4,15 @@ class RoleController {
 
 
     static async getRoles(ctx) {
+        const { page, limit } = ctx.query;
         try {
-            const data = await RoleModel.getRoles();
-
+            const data = await RoleModel.getRoles(parseInt(page), parseInt(limit));
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
                 message: '查询成功',
-                data,
+                data: data.rows,
+                total: data.total
             }
         } catch (error) {
             ctx.response.status = 416;
@@ -91,9 +92,9 @@ class RoleController {
 
 
     static async deleteRole(ctx) {
-        const {id} = ctx.params;
+        const { id } = ctx.params;
         //删除用户与角色关联
-        //await UserRoleModel.deleteUserRoleByRoleId(id);
+        await UserRoleModel.deleteUserRoleByRoleId(id);
         try {
             const data = await RoleModel.deleteRole(id);
             if (data == 1) {
