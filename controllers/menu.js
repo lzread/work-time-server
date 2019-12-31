@@ -14,10 +14,10 @@ class MenuController {
                 data.forEach(item => {
                     let parent = map[item.parent_id];
 
-                    if (item.role) {
-                        item.role = item.role.split(',');
+                    if (item.roles) {
+                        item.roles = item.roles.split(',');
                     } else {
-                        item.role = [];
+                        item.roles = [];
                     }
 
 
@@ -51,50 +51,7 @@ class MenuController {
 
     static async getMenus(ctx) {
         try {
-            let query = await MenuModel.getMenus();
-            const data = treeList(query);
-            function treeList(data) {
-                let obj = [];
-                let map = [];
-                data.forEach(item => {
-                    map[item.id] = item;
-                });
-                data.forEach(item => {
-                    let parent = map[item.parent_id];
-
-                    if (item.role) {
-                        item.role = item.role.split(',');
-                    } else {
-                        item.role = [];
-                    }
-
-                    if (item.type == 0) {
-                        if (parent) {
-                            if (!Array.isArray(parent.children)) {
-                                parent.children = [];
-                            }
-                            parent.children.push(item);
-                        } else {
-                            obj.push(item);
-                        }
-                    } else {
-                        if (parent) {
-                            if (!Array.isArray(parent.permission)) {
-                                parent.permission = [];
-                            }
-                            if (item.role.length > 0) {
-                                parent.permission.push({
-                                    code: item.name,
-                                    desc: item.title,
-                                    role: item.role
-                                });
-                            }
-
-                        }
-                    }
-                });
-                return obj;
-            }
+            const data = await MenuModel.getMenus();
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
