@@ -7,14 +7,14 @@ class UserRoleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '创建成功',
+                message: '创建成功',
                 data
             }
         } catch (error) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '创建失败',
+                message: '创建失败',
             }
         }
     }
@@ -25,14 +25,14 @@ class UserRoleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '操作成功',
+                message: '操作成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '操作失败',
+                message: '操作失败',
             }
         }
     }

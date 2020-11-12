@@ -43,7 +43,7 @@ class MenuController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: 'getAllMenus查询失败',
             }
         }
 
@@ -62,7 +62,7 @@ class MenuController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: 'getMenus查询失败',
             }
         }
     }

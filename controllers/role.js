@@ -18,7 +18,7 @@ class RoleController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: '查询失败',
             }
         }
     }
@@ -45,7 +45,7 @@ class RoleController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: '查询失败',
             }
         }
     }
@@ -59,14 +59,14 @@ class RoleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '操作成功',
+                message: '操作成功',
                 data
             }
         } catch (error) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '操作失败',
+                message: '操作失败',
             }
         }
     }
@@ -78,14 +78,14 @@ class RoleController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '操作成功',
+                message: '操作成功',
                 data
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '操作失败',
+                message: '操作失败',
             }
         }
     }
@@ -101,13 +101,13 @@ class RoleController {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
-                    msg: '操作成功',
+                    message: '操作成功',
                 }
             } else {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 412,
-                    msg: '操作失败',
+                    message: '操作失败',
                 }
             }
 
@@ -115,7 +115,7 @@ class RoleController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '操作失败',
+                message: '操作失败',
             }
         }
     }

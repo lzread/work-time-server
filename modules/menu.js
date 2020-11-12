@@ -11,7 +11,7 @@ class MenuModel {
      * 包含操作权限、角色
      */
     static async getMenus() {
-        return await Sequelize.query(`SELECT t1.* , ( SELECT GROUP_CONCAT(t3.role_code) FROM role_menu t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.menu_id = t1.id ) AS roles FROM menu t1 ORDER BY t1.sort DESC`, {
+        return await Sequelize.query(`SELECT t1.* , ( SELECT GROUP_CONCAT(t3.role_code) FROM role_menu t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.menu_id = t1.id ) AS roles FROM menu t1`, {
             type: Sequelize.QueryTypes.SELECT
         });
     }

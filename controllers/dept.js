@@ -18,7 +18,7 @@ class DeptController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: '查询失败',
             }
         }
     }

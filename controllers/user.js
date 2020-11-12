@@ -6,15 +6,25 @@ class userController {
 
     static async login(ctx) {
         const req = ctx.request.body;
+
+
         try {
             const query = await UserModel.login(req.username, req.password);
             const data = {};
             if (query) {
-                const token = jwt.sign({ username: req.username, password: req.password }, 'token', {
-                    expiresIn: 60 * 60 * 1  // 1小时过期
+                const token = jwt.sign({
+                    username: req.username,
+                    password: req.password
+                }, 'token', {
+                    expiresIn: 60 * 60 * 1 // 1小时过期
                 });
+
                 data.id = query.id;
+
                 data.token = token;
+
+
+
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -30,6 +40,7 @@ class userController {
                 }
             }
         } catch (error) {
+            console.log('````````````````````````416');
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
@@ -40,12 +51,16 @@ class userController {
 
     static async getInfo(ctx) {
         const id = ctx.params.id;
+
         try {
             const query = await UserModel.getInfo(id);
+
             if (query) {
                 query.roles = query.roles ? query.roles.split(",") : [];
                 query.role_ids = query.role_ids ? query.role_ids.split(",") : [];
                 const data = query;
+
+
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
@@ -63,7 +78,7 @@ class userController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: '用户信息查询失败',
             }
         }
 
@@ -72,7 +87,10 @@ class userController {
     }
 
     static async getUsers(ctx) {
-        const { page, limit } = ctx.query;
+        const {
+            page,
+            limit
+        } = ctx.query;
         try {
             const data = await UserModel.getUsers(parseInt(page), parseInt(limit));
             ctx.response.status = 200;
@@ -86,7 +104,7 @@ class userController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: 'getUsers查询失败',
             }
         }
     }
@@ -105,7 +123,7 @@ class userController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '查询失败',
+                message: 'getUserByRoleId查询失败',
             }
         }
 
@@ -122,14 +140,14 @@ class userController {
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
-                msg: '创建成功',
+                message: '创建成功',
                 data
             }
         } catch (error) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '创建失败',
+                message: '创建失败',
             }
         }
     }
@@ -142,13 +160,13 @@ class userController {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
-                    msg: '更新成功',
+                    message: '更新成功',
                 }
             } else {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 412,
-                    msg: '更新失败',
+                    message: '更新失败',
                 }
             }
 
@@ -156,7 +174,7 @@ class userController {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '更新失败',
+                message: '更新失败',
             }
         }
     }
@@ -171,20 +189,20 @@ class userController {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 200,
-                    msg: '删除成功',
+                    message: '删除成功',
                 }
             } else {
                 ctx.response.status = 200;
                 ctx.body = {
                     code: 412,
-                    msg: '删除失败',
+                    message: '删除失败',
                 }
             }
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                msg: '删除失败',
+                message: '删除失败',
             }
         }
     }

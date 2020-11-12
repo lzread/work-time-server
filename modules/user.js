@@ -19,7 +19,6 @@ class UserModel {
      */
     static async login(username, password) {
         return await User.findOne({
-            attributes: ['id'],
             where: {
                 username,
                 password
@@ -31,7 +30,7 @@ class UserModel {
      * @param {Number} id 用户ID
      */
     static async getInfo(id) {
-        return await Sequelize.query(`SELECT t1.*,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS roles,(SELECT GROUP_CONCAT(t3.id)	FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS role_ids FROM USER t1 WHERE t1.id = ${id}`, {
+        return await Sequelize.query(`SELECT t1.*,(SELECT GROUP_CONCAT(t3.role_code) FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS roles,(SELECT GROUP_CONCAT(t3.id)	FROM user_role t2 LEFT JOIN role t3 ON t3.id = t2.role_id WHERE t2.user_id = t1.id) AS role_ids FROM user t1 WHERE t1.id = ${id}`, {
             // 如果plain为true,则sequelize将仅返回结果集的第一条记录. 
             // 如果是false,它将返回所有记录.
             plain: true,
