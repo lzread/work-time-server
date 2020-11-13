@@ -5,13 +5,9 @@
 const Router = require('koa-router')
 
 const UserController = require('../controllers/user')
-const DeptController = require('../controllers/dept')
-const JobController = require('../controllers/job')
 const MenuController = require('../controllers/menu')
 const RoleController = require('../controllers/role')
 const RoleMenuController = require('../controllers/role_menu')
-const UserDeptController = require('../controllers/user_dept')
-const UserJobController = require('../controllers/user_job')
 const UserRoleController = require('../controllers/user_role')
 
 const router = new Router({
@@ -36,22 +32,6 @@ router.post('/user/deleteUserRole', UserRoleController.deleteUserRole);
 
 
 
-
-/**
- * 部门相关
- */
-router.get('/dept/getDepts', DeptController.getDepts);
-router.post('/dept/addDept', DeptController.addDept);
-router.post('/dept/updateDept', DeptController.updateDept);
-router.post('/dept/deleteDept/:id', DeptController.deleteDept);
-
-/**
- * 职务相关
- */
-router.get('/job/getJobs', JobController.getJobs);
-router.post('/job/addJob', JobController.addJob);
-router.post('/job/updateJob', JobController.updateJob);
-router.post('/job/deleteJob/:id', JobController.deleteJob);
 
 /**
  * 菜单相关
