@@ -1,6 +1,7 @@
 const UserModel = require('../modules/user')
 const jwt = require('jsonwebtoken')
-
+const _config_ = require('../config');
+const util = require('../utils');
 class userController {
 
 
@@ -11,19 +12,20 @@ class userController {
         try {
             const query = await UserModel.login(req.username, req.password);
             const data = {};
+
             if (query) {
-                const token = jwt.sign({
-                    username: req.username,
-                    password: req.password
-                }, 'token', {
-                    expiresIn: 60 * 60 * 1 // 1小时过期
-                });
+
+                //访问接口使用的token
+                // const token = jwt.sign({ username: query.username, id: query.id }, _config_.SECRET, {
+                //     expiresIn: 60 * 60 * 0.01 // 1小时过期
+                // });
+
+                const token = util.getToken({ username: query.username, id: query.id });
+
+
 
                 data.id = query.id;
-
                 data.token = token;
-
-
 
                 ctx.response.status = 200;
                 ctx.body = {
@@ -40,7 +42,6 @@ class userController {
                 }
             }
         } catch (error) {
-            console.log('````````````````````````416');
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
@@ -130,8 +131,6 @@ class userController {
 
 
     }
-
-
 
     static async addUser(ctx) {
         const req = ctx.request.body;
