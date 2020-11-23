@@ -1,4 +1,6 @@
+const UPLOAD_PATH = '';
 const SECRET = 'LZREADTOKEN';
 module.exports = {
-    SECRET
+    SECRET,
+    UPLOAD_PATH
 }

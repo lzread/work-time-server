@@ -10,9 +10,16 @@ const RoleController = require('../controllers/role')
 const RoleMenuController = require('../controllers/role_menu')
 const UserRoleController = require('../controllers/user_role')
 const NoticeController = require('../controllers/notice')
+
+const UploadController = require('../utils/upload')
+
 const router = new Router({
     prefix: '/api'
 })
+
+
+router.post('/uploadFile', UploadController.uploadFile);
+
 /**
  * 用户相关
  */

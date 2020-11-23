@@ -8,7 +8,6 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa-cors');
 
-const jwt = require('jsonwebtoken');
 
 const util = require('./utils')
 
@@ -20,39 +19,16 @@ const app = new Koa()
 app.use(cors());
 
 // 使用koa-body
-app.use(koabody());
+app.use(koabody({
+  multipart: true, // 支持文件上传
+  formidable: {
+    maxFieldsSize: 2 * 1024 * 1024, // 最大文件为2兆
+    multipart: true // 是否支持 multipart-formdate 的表单
+  }
+}));
 
 // 中间件对 token 进行验证
 app.use((ctx, next) => {
-
-  // if (ctx.header && ctx.header.authorization) {
-  //   const parts = ctx.header.authorization.split(' ');
-  //   if (parts.length === 2) {
-  //     //取出token
-  //     const scheme = parts[0];
-  //     const token = parts[1];
-
-  //     console.log(scheme)
-
-  //     if (/^Bearer$/i.test(scheme)) {
-  //       try {
-  //         //jwt.verify方法验证token是否有效
-  //         jwt.verify(token, _config_.SECRET, {
-  //           complete: true
-  //         });
-  //       } catch (error) {
-  //         //token过期 生成新的token
-  //         const newToken = scheme + " " + util.getToken({ username: 'm2', id: '2' });
-  //         //将新token放入Authorization中返回给前端
-  //         ctx.res.setHeader('Authorization', newToken);
-  //         console.log(jwt.verify(util.getToken({ username: 'm2', id: '2' }), _config_.SECRET, {
-  //           complete: true
-  //         }))
-  //       }
-  //     }
-  //   }
-  // }
-
   return next().catch((err) => {
     // 不满足条件，让用户重新登录
     if (err.status === 401) {
@@ -69,9 +45,8 @@ app.use((ctx, next) => {
 
 // 过滤不需要验证的接口 目前只有登录接口不需要验证
 app.use(koajwt({ secret: _config_.SECRET }).unless({
-  path: [/^\/api\/user\/login/]
+  path: [/^\/api\/user\/login/,/^\/api\/uploadFile/,/^\/api\/public/]
 }));
-
 
 const index = require('./routes/index')
 

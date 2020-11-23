@@ -24,6 +24,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             field: 'content',
         },
+        // 封面
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            field: 'image',
+        },
         // 发布时间
         release_time: {
             type: DataTypes.STRING,
