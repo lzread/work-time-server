@@ -28,25 +28,25 @@ app.use(koabody({
 }));
 
 // 中间件对 token 进行验证
-// app.use((ctx, next) => {
-//   return next().catch((err) => {
-//     // 不满足条件，让用户重新登录
-//     if (err.status === 401) {
-//       ctx.status = 401;
-//       ctx.body = {
-//         code: 401,
-//         message: err.message
-//       }
-//     } else {
-//       throw err;
-//     }
-//   })
-// });
+app.use((ctx, next) => {
+  return next().catch((err) => {
+    // 不满足条件，让用户重新登录
+    if (err.status === 401) {
+      ctx.status = 401;
+      ctx.body = {
+        code: 401,
+        message: err.message
+      }
+    } else {
+      throw err;
+    }
+  })
+});
 
 // 过滤不需要验证的接口 目前只有登录接口不需要验证
-// app.use(koajwt({ secret: _config_.SECRET }).unless({
-//   path: [/^\/api\/user\/login/,/^\/api\/uploadFile/,/^\/api\/public/]
-// }));
+app.use(koajwt({ secret: _config_.SECRET }).unless({
+  path: [/^\/api\/user\/login/,/^\/api\/uploadFile/,/^\/api\/public/]
+}));
 
 const index = require('./routes/index')
 
