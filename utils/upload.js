@@ -12,7 +12,9 @@ class UploadController {
 
             var fileName = util.getUploadDirName() + '.' + util.getUploadFileExt(file.name);
 
-            let filePath = path.join(__dirname, 'public/upload/') + fileName;
+            let filePath = process.cwd() + '/public/upload/' + fileName;
+
+            console.log(filePath);
 
             let url = fileName;
 

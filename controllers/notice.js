@@ -2,9 +2,9 @@ const NoticeModel = require('../modules/notice')
 class NoticeController {
 
     static async list(ctx) {
-        const { page, limit } = ctx.query;
+        const { page, limit, keyword } = ctx.query;
         try {
-            const data = await NoticeModel.list(parseInt(page), parseInt(limit));
+            const data = await NoticeModel.list(parseInt(page), parseInt(limit), keyword);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,

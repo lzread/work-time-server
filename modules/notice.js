@@ -17,10 +17,15 @@ Notice.sync({ force: false });
 
 class NoticeModel {
     /**
-     * 查询
+     * 列表
      */
-    static async list(page, limit) {
+    static async list(page, limit, keyword) {
         const data = await Notice.findAndCountAll({
+            where: {
+                title: {
+                    [Op.like]: `%${keyword}%`
+                }
+            },
             limit: limit,
             offset: limit * (page - 1),
             raw: true
