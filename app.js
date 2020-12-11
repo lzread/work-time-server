@@ -45,7 +45,7 @@ app.use((ctx, next) => {
 
 // 过滤不需要验证的接口 目前只有登录接口不需要验证
 app.use(koajwt({ secret: _config_.SECRET }).unless({
-  path: [/^\/api\/user\/login/,/^\/api\/uploadFile/,/^\/api\/public/]
+  path: [/^\/api\/user\/login/,/^\/api\/uploadFile/,/^\/upload/]
 }));
 
 const index = require('./routes/index')
