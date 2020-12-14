@@ -41,6 +41,26 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             field: 'icon',
         },
+        //缓存
+        noCache: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'noCache',
+            defaultValue: 'false'
+        },
+        //固定
+        affix: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'affix',
+            defaultValue: 'false'
+        },
+        //默认高亮
+        activeMenu: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'activeMenu',
+        },
         //重定向
         redirect: {
             type: DataTypes.STRING,

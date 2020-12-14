@@ -4,7 +4,8 @@ class NoticeController {
     static async list(ctx) {
         const { page, limit, keyword } = ctx.query;
         try {
-            const data = await NoticeModel.list(parseInt(page), parseInt(limit), keyword);
+            let k = keyword || "";
+            const data = await NoticeModel.list(parseInt(page), parseInt(limit), k);
             ctx.response.status = 200;
             ctx.body = {
                 code: 200,
