@@ -16,8 +16,35 @@ class MenuModel {
         });
     }
 
-
-
+    /**
+     * 新建
+     */
+    static async add(data) {
+        return await Menu.create(data)
+    }
+    /**
+     * 编辑
+     */
+    static async edit(data) {
+        const { id } = data;
+        return await Menu.update(
+            data,
+            {
+                where: {
+                    id
+                }
+            })
+    }
+    /**
+     * 删除
+     */
+    static async del(id) {
+        return await Menu.destroy({
+            where: {
+                id
+            }
+        })
+    }
 
 
 

@@ -67,6 +67,71 @@ class MenuController {
         }
     }
 
+    static async add(ctx) {
+        const request = ctx.request.body;
+        try {
+            const data = await MenuModel.add(request);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '成功',
+                data
+            }
+        } catch (error) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                message: '失败',
+            }
+        }
+    }
+
+    static async edit(ctx) {
+        const request = ctx.request.body;
+        try {
+            const data = await MenuModel.edit(request);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '成功',
+                data
+            }
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                message: '失败',
+            }
+        }
+    }
+
+    static async del(ctx) {
+        const { id } = ctx.params;
+        try {
+            const data = await MenuModel.del(id);
+            if (data == 1) {
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 200,
+                    message: '成功',
+                }
+            } else {
+                ctx.response.status = 200;
+                ctx.body = {
+                    code: 412,
+                    message: '失败',
+                }
+            }
+
+        } catch (err) {
+            ctx.response.status = 416;
+            ctx.body = {
+                code: 416,
+                message: '失败',
+            }
+        }
+    }
+
 
 
 

@@ -37,6 +37,9 @@ router.post('/user/deleteUserRole', UserRoleController.deleteUserRole);
  */
 router.get('/menu/getMenus', MenuController.getMenus);
 router.get('/menu/getAllMenus', MenuController.getAllMenus);
+router.post('/menu/add', MenuController.add);
+router.post('/menu/edit', MenuController.edit);
+router.post('/menu/del/:id', MenuController.del);
 /**
  * 角色相关
  */

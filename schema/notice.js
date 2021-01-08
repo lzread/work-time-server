@@ -21,13 +21,13 @@ module.exports = function (sequelize, DataTypes) {
         // 内容
         content: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
             field: 'content',
         },
         // 封面
         image: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             field: 'image',
         },
         // 发布时间

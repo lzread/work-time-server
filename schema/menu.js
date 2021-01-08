@@ -43,23 +43,35 @@ module.exports = function (sequelize, DataTypes) {
         },
         //缓存
         noCache: {
-            type: DataTypes.STRING,
+            type: DataTypes.BOOLEAN,
             allowNull: true,
             field: 'noCache',
-            defaultValue: 'false'
+            defaultValue: false
         },
         //固定
         affix: {
-            type: DataTypes.STRING,
+            type: DataTypes.BOOLEAN,
             allowNull: true,
             field: 'affix',
-            defaultValue: 'false'
+            defaultValue: false
         },
-        //默认高亮
         activeMenu: {
-            type: DataTypes.STRING,
+            type: DataTypes.BOOLEAN,
             allowNull: true,
             field: 'activeMenu',
+            defaultValue: false
+        },
+        breadcrumb: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            field: 'breadcrumb',
+            defaultValue: false
+        },
+        alwaysShow: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            field: 'alwaysShow',
+            defaultValue: false
         },
         //重定向
         redirect: {
@@ -69,10 +81,10 @@ module.exports = function (sequelize, DataTypes) {
         },
         //是否隐藏
         hidden: {
-            type: DataTypes.STRING,
+            type: DataTypes.BOOLEAN,
             allowNull: true,
             field: 'hidden',
-            defaultValue: 'false'
+            defaultValue: false
         },
         //父级ID
         parent_id: {
@@ -94,6 +106,13 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true,
             field: 'sort',
             defaultValue: '0'
+        },
+        // 状态 0 正常 -1 禁用
+        status: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'status',
+            defaultValue:'0' 
         },
 
     }, {

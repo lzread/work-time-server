@@ -134,6 +134,7 @@ class userController {
 
     static async addUser(ctx) {
         const req = ctx.request.body;
+
         try {
             const data = await UserModel.addUser(req);
             ctx.response.status = 200;
@@ -152,28 +153,21 @@ class userController {
     }
 
     static async updateUser(ctx) {
-        const req = ctx.request.body;
+        const request = ctx.request.body;
+        console.log(request)
         try {
-            const data = await UserModel.updateUser(req);
-            if (data[0] == 1) {
-                ctx.response.status = 200;
-                ctx.body = {
-                    code: 200,
-                    message: '更新成功',
-                }
-            } else {
-                ctx.response.status = 200;
-                ctx.body = {
-                    code: 412,
-                    message: '更新失败',
-                }
+            const data = await UserModel.updateUser(request);
+            ctx.response.status = 200;
+            ctx.body = {
+                code: 200,
+                message: '成功',
+                data
             }
-
         } catch (err) {
             ctx.response.status = 416;
             ctx.body = {
                 code: 416,
-                message: '更新失败',
+                message: '失败',
             }
         }
     }

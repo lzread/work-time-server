@@ -67,7 +67,7 @@ class UserModel {
      * @param {Number} data 用户数据模型
      */
     static async addUser(data) {
-        return await Users.create(data)
+        return await User.create(data)
     }
     /**
      * 更新用户
@@ -75,7 +75,8 @@ class UserModel {
      */
     static async updateUser(data) {
         const { id } = data;
-        return await Users.update(
+        return await User.update(
+            data,
             {
                 where: {
                     id
@@ -87,7 +88,7 @@ class UserModel {
      * @param {Number} id 用户ID
      */
     static async deleteUser(id) {
-        return await Users.destroy({
+        return await User.destroy({
             where: {
                 id
             }
